@@ -1,0 +1,49 @@
+html {
+    font-family: 'Kiwi Maru', serif;
+}
+
+h1 {
+    font-size: 200px;
+    text-align: center;
+    margin: auto auto 200px auto;
+}
+
+.header1 {
+    margin: auto auto 0px auto;
+}
+
+h2 {
+    font-size: 50px;
+    text-align: center;
+    margin: auto auto 150px auto;
+}
+
+.logotipo {
+    width: 15%;
+    height: 15%;
+}
+
+.engranaje {
+    width: 10%;
+    height: 10%;
+    position: absolute;
+    top: 15px;
+    right: 5px;
+}
+
+.botones {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.botones > button {
+    flex: 1;
+    font-size: x-large;
+    margin: 10px;
+    height: 100px;
+}
+
+.botones button:hover {
+    background-color: grey;
+}

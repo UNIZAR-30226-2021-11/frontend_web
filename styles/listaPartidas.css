@@ -1,0 +1,16 @@
+html {
+    font-family: 'Kiwi Maru', serif;
+}
+
+h1 {
+    font-size: 80px;
+    margin: auto auto 10px auto;
+}
+
+.logotipo {
+    position: absolute;
+    top: 15px;
+    right: 5px;
+    width: 15%;
+    height: 15%;
+}
