@@ -22,13 +22,7 @@ h1 {
     margin: auto auto 30px auto;
 }
 
-.botones {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.acceder, .crearCuenta {
+.acceder {
     height: 80px;
     width: 40%;
 }

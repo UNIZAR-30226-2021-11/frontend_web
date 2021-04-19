@@ -10,7 +10,7 @@ boton2.onclick = function() {
     window.location.href = "onlineInicio.html";
 }
 boton3.onclick = function() {
-    alert("Visita al perfil de usuario.");
+    window.location.href = "inicioSesion.html";
 }
 boton4.onclick = function() {
     alert("Botón de opciones pulsado");
