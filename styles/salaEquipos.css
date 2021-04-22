@@ -25,6 +25,17 @@ html {
     margin-bottom: 30px;
 }
 
+.button:disabled {
+    opacity: 60%;
+    cursor: default;
+}
+
+#iniciarPartida {
+    display: block;
+    margin: auto;
+    margin-top: 10px;
+}
+
 #codigoPartida {
     float: right;
     font-size: 18px;
