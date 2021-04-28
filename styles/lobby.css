@@ -1,0 +1,48 @@
+html {
+    font-family: 'Kiwi Maru', serif;
+}
+
+h1 {
+    font-size: 200px;
+    text-align: center;
+    margin: auto auto 200px auto;
+}
+
+.botonLogout {
+    position: absolute;
+    top: 5%;
+    right: 3%;
+    font-size: large;
+    height: 30px;
+    width: 200px;
+}
+
+.botonLogout:hover {
+    background-color: red;
+    color: white;
+    border: solid black;
+}
+
+.logotipo {
+    width: 15%;
+    height: 15%;
+}
+
+.botones {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.botones > button {
+    flex: 1;
+    font-size: x-large;
+    margin: 10px;
+    height: 100px;
+}
+
+.botones button:hover {
+    background-color: green;
+    color: white;
+    border: solid black;
+}

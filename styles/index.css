@@ -3,32 +3,31 @@ html {
 }
 
 h1 {
-    font-size: 200px;
+    font-size: 100px;
     text-align: center;
-    margin: auto auto 200px auto;
-}
-
-.header1 {
-    margin: auto auto 0px auto;
-}
-
-h2 {
-    font-size: 50px;
-    text-align: center;
-    margin: auto auto 150px auto;
+    margin: 100px auto 50px auto;
 }
 
 .logotipo {
     width: 15%;
     height: 15%;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
-.engranaje {
-    width: 10%;
-    height: 10%;
-    position: absolute;
-    top: 15px;
-    right: 5px;
+.formulario {
+    position: relative;
+    margin: auto;
+    width: 50%;
+}
+
+.formulario * {
+    display: block;
+    width: 100%;
+    height: 30px;
+    font-size: large;
+    margin: auto auto 30px auto;
 }
 
 .botones {
@@ -37,13 +36,13 @@ h2 {
     justify-content: center;
 }
 
-.botones > button {
-    flex: 1;
-    font-size: x-large;
-    margin: 10px;
-    height: 100px;
+.acceder, .crearCuenta {
+    height: 80px;
+    width: 40%;
 }
 
-.botones button:hover {
-    background-color: grey;
+.acceder:hover, .crearCuenta:hover {
+    background-color: green;
+    color: white;
+    border: solid black;
 }

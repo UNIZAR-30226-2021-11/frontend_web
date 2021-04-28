@@ -14,3 +14,23 @@ h1 {
     width: 15%;
     height: 15%;
 }
+
+input {
+    height: 30px;
+    font-size: large;
+}
+
+.buscador {
+    width: 50%;
+}
+
+ul {
+    width: 70%;
+    list-style-type: none;
+    margin: 20px 0 0 0;
+    padding: 0;
+}
+
+li {
+    border: solid black;
+}

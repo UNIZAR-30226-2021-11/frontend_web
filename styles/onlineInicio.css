@@ -1,0 +1,50 @@
+html {
+    font-family: 'Kiwi Maru', serif;
+}
+
+h1 {
+    font-size: 200px;
+    text-align: center;
+    margin: 100px auto 0px auto;
+}
+
+h2 {
+    font-size: 50px;
+    text-align: center;
+    margin: auto auto 150px auto;
+}
+
+.logotipo {
+    width: 15%;
+    height: 15%;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.flechaIz {
+    position: absolute;
+    top: 5%;
+    left: 2%;
+    height: 5%;
+    width: 5%;
+}
+
+.botones {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.botones > button {
+    flex: 1;
+    font-size: x-large;
+    margin: 10px;
+    height: 100px;
+}
+
+.botones button:hover {
+    background-color: green;
+    color: white;
+    border: solid black;
+}

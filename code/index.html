@@ -2,20 +2,24 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Guiñote - Mañosoft</title>
+        <title>Inicio de sesión - Mañosoft</title>
         <link href="../styles/index.css" rel="stylesheet" type="text/css">
-        <link rel="preconnect" href="https://fonts.gstatic.com"> 
+        <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@500&display=swap" rel="stylesheet">
     </head>
     <body>
-        <img src="../images/logo.png" alt="Logo de la empresa Mañosoft." class="logotipo"></img>
-        <a href="" title="Ajustes"><img src="../images/gears.svg" alt="Engranaje" class="engranaje"></img></a>
-        <h1>Guiñote</h1>
-        <div class="botones">
-            <button id="botonJugarSolo">Jugar solo</button>
-            <button id="botonJugarOnline">Jugar Online</button>
-            <button id="botonPerfil">Perfil</button>
-        </div>
-        <script src="../scripts/main.js"></script>
+        <img src="../images/logo.png" class="logotipo"></img>
+        <h1>Iniciar sesión</h1>
+        <form class="formulario">
+            <label for="user">Usuario</label>
+            <input type="text" id="user" name="user" placeholder="Escriba su nombre de usuario">
+            <label for="pass">Contraseña</label>
+            <input type="password" id="pass" name="pass">
+            <div class="botones">
+                <button type="button" class="acceder">Acceder</button>
+                <button type="button" class="crearCuenta">Crear cuenta</button>
+            </div>
+        </form>
+        <script src="../scripts/index.js"></script>
     </body>
 </html>

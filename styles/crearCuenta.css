@@ -8,6 +8,14 @@ h1 {
     margin: 100px auto 50px auto;
 }
 
+.flechaIz {
+    position: absolute;
+    top: 5%;
+    left: 2%;
+    height: 5%;
+    width: 5%;
+}
+
 .formulario {
     position: relative;
     margin: auto;
@@ -22,12 +30,12 @@ h1 {
     margin: auto auto 30px auto;
 }
 
-.acceder {
+.accept {
     height: 80px;
     width: 40%;
 }
 
-.acceder:hover, .crearCuenta:hover {
+.accept:hover {
     background-color: green;
     color: white;
     border: solid black;
