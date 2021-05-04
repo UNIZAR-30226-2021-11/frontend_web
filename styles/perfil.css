@@ -1,0 +1,114 @@
+html {
+    height: 100%;
+}
+
+#pantalla {
+    min-width: 100%;
+    min-height: 100%;
+}
+
+#back {
+    clear: both;
+    display: block;
+    float: left;
+}
+
+.button {
+    width: 250px;
+    height: 80px;
+    border: 2px solid #555555;
+    border-radius: 8px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 4px 2px;
+    cursor: pointer;
+    background-color: #e7e7e7;
+    color: black;
+}
+
+aside {
+    float: right;
+    width: 20%;
+    min-height: 50%;
+}
+
+#content {
+    float: left;
+    width: 80%;
+    min-height: 40%;
+    font-size: 26px;
+}
+
+#tablaHistorial {
+    float: left;
+    width: 100%;
+    min-height: 50%;
+}
+
+#historialCorto {
+    margin: auto;
+    width: 90%;
+    margin-top: 10px;
+    border-collapse: collapse;
+    border: 1px solid black;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 26px;
+}
+
+#historialCorto th {
+    padding: 5px;
+    border: 1px solid black;
+}
+
+#historialCorto td {
+    padding: 15px;
+    border-right: 1px solid black;
+}
+
+#historialCorto tr:hover {
+    background-color: #ddd;
+}
+
+#userSearch {
+    display: inline-block;
+    width: 50%;
+    font-size: 26px;
+    margin-left: 40px;
+}
+
+input[type=text] {
+    width: 220px;
+    height: 50px;
+    border: 2px solid #555555;
+    border-radius: 8px;
+    padding: 2px;
+    text-align: left;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: text;
+    color: black;
+    display: inline-block;
+    font-size: 20px;
+}
+
+input[type=submit] {
+    width: 120px;
+    height: 60px;
+    border: 2px solid #555555;
+    border-radius: 8px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    background-color: #e7e7e7;
+    color: black;
+    display: inline-block;
+    font-size: 20px;
+}

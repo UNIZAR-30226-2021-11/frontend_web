@@ -1,0 +1,45 @@
+html {
+    height: 100%;
+}
+
+#pantalla {
+    min-width: 100%;
+    min-height: 100%;
+}
+
+h1 {
+    text-align: center;
+    display: inline-block;
+    width: 90%;
+    font-size: 36px;
+}
+
+#tablaHistorial {
+    float: left;
+    width: 100%;
+    min-height: 90%;
+}
+
+#historialCompleto {
+    margin: auto;
+    width: 90%;
+    margin-top: 10px;
+    border-collapse: collapse;
+    border: 1px solid black;
+    text-align: center;
+    font-size: 26px;
+}
+
+#historialCompleto th {
+    padding: 5px;
+    border: 1px solid black;
+}
+
+#historialCompleto td {
+    padding: 15px;
+    border-right: 1px solid black;
+}
+
+#historialCompleto tr:hover {
+    background-color: #ddd;
+}

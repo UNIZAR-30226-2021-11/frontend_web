@@ -1,0 +1,69 @@
+html {
+    height: 100%;
+}
+
+#pantalla {
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.button {
+    width: 250px;
+    height: 80px;
+    border: 2px solid #555555;
+    border-radius: 8px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 4px 2px;
+    cursor: pointer;
+    background-color: #e7e7e7;
+    color: black;
+    margin-bottom: 30px;
+}
+
+.button:disabled {
+    opacity: 60%;
+    cursor: default;
+}
+
+#iniciarPartida {
+    display: block;
+    margin: auto;
+    margin-top: 10px;
+}
+
+#codigoPartida {
+    float: right;
+    font-size: 18px;
+}
+
+#content {
+    margin: auto;
+    width: 80%;
+    padding: 10px;
+}
+
+#equipo1 {
+    margin-left: 20%;
+}
+
+#equipo2 {
+    margin-left: 27%;
+}
+
+#equipos {
+    margin: auto;
+    width: 90%;
+    margin-top: 10px;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 26px;
+}
+
+#equipos td {
+    padding: 15px;
+}
