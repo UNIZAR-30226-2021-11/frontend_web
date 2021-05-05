@@ -8,17 +8,17 @@ function crearUsuario(e) {
     const pass = document.querySelector("#pass").value;
 
     fetch("http://15.188.14.213:11050/api/v1/users/", {
-        method: "POST",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            username: username,
-            email: email,
-            password: pass
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: username,
+                email: email,
+                password: pass
+            })
         })
-    })
         .then(res => res.text())
         .then(data => {
             const {
@@ -32,5 +32,5 @@ function crearUsuario(e) {
 botonSubmit.addEventListener('click', crearUsuario);
 
 atras.onclick = function() {
-    window.location.href = "../code/inicioSesion.html";
+    window.location.href = "../code/index.html";
 }

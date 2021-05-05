@@ -4,14 +4,14 @@ let boton3 = document.querySelector(".botonPerfil");
 let boton4 = document.querySelector(".botonLogout");
 
 boton1.onclick = function() {
-    alert("Comienza el modo de juego en solitario.");
+    window.location.href = "../code/tableroJuego.html";
 }
 boton2.onclick = function() {
-    window.location.href = "onlineInicio.html";
+    window.location.href = "../code/onlineInicio.html";
 }
 boton3.onclick = function() {
-    window.location.href = "inicioSesion.html";
+    window.location.href = "../code/perfil.html";
 }
 boton4.onclick = function() {
-    window.location.href = "../code/inicioSesion.html"
+    window.location.href = "../code/index.html"
 }
