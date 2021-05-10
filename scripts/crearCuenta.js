@@ -6,31 +6,38 @@ function crearUsuario(e) {
     const email = document.querySelector("#mail").value;
     const username = document.querySelector("#user").value;
     const pass = document.querySelector("#pass").value;
+    const jsonData = JSON.stringify({
+        username: username,
+        email: email,
+        location: "Terrer",
+        password: pass
+    });
 
-    fetch("http://15.188.14.213:11050/api/v1/users/", {
+    //fetch("http://15.188.14.213:11050/api/v1/users/", {
+    fetch("http://localhost:9000/api/v1/users/", {
         method: "POST",
         headers: {
-            Accept: "application/json",
+            //Accept: "application/json",
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-            username: username,
-            email: email,
-            password: pass
-        })
+        body: jsonData
     })
-        .then(res => res.text())
-        .then(data => {
-            const {
-                result
-            } = data;
-            alert(result);
-        })
-        .catch(err => console.log(err));
+    .then(response => {
+        if(response.ok) {
+            alert("Usuario creado correctamente.");
+            return response.json();
+        }
+        else {
+            alert("Se ha producido un fallo. No se ha podido crear el usuario.");
+            throw "Respuesta incorrecta por parte del servidor.";
+        }
+    })
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
 }
 
 botonSubmit.addEventListener('click', crearUsuario);
 
 atras.onclick = function() {
-    window.location.href = "../code/inicioSesion.html";
+    window.location.href = "../code/index.html";
 }

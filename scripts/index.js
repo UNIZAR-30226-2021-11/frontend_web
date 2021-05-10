@@ -5,17 +5,35 @@ botonRegistro.onclick = function() {
     window.location.href = "../code/crearCuenta.html";
 }
 
-botonLogin.onclick = function() {
-    let username = document.querySelector("#user").value;
-    let pass = document.querySelector("#pass").value;
+function login() {
+    const username = document.querySelector("#user").value;
+    const pass = document.querySelector("#pass").value;
+    const jsonData = JSON.stringify({
+        username: username,
+        password: pass
+    });
 
-    const http = new XMLHttpRequest();
-    const url = 'https://jsonplaceholder.typicode.com/posts';
-    http.onreadystatechange = function() {
-        if(this.readyState==4 && this.status==200) {
-            console.log(http.responseText);
+    fetch("http://localhost:9000/api/v1/users/login/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: jsonData
+    })
+    .then(response => {
+        if(response.ok) {
+            return response.json();
         }
-    }
-    http.open("GET", url);
-    http.send();
+        else {
+            alert("Fallo al iniciar sesión.");
+            throw "Respuesta incorrecta por parte del servidor";
+        }
+    })
+    .then(data => {
+        console.log(data);
+        window.location.href = "../code/lobby.html";
+    })
+    .catch(err => console.log(err));
 }
+
+botonLogin.addEventListener('click', login);
