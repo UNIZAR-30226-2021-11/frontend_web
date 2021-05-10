@@ -4,7 +4,7 @@ let boton3 = document.querySelector(".botonPerfil");
 let boton4 = document.querySelector(".botonLogout");
 
 boton1.onclick = function() {
-    alert("Comienza el modo de juego en solitario.");
+    window.location.href = "../code/tableroJuego.html";
 }
 boton2.onclick = function() {
     window.location.href = "../code/onlineInicio.html";
