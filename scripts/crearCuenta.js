@@ -25,14 +25,13 @@ function crearUsuario(e) {
     .then(response => {
         if(response.ok) {
             alert("Usuario creado correctamente.");
-            return response.json();
+            window.location.href = "index.html";
         }
         else {
             alert("Se ha producido un fallo. No se ha podido crear el usuario.");
             throw "Respuesta incorrecta por parte del servidor.";
         }
     })
-    .then(data => console.log(data))
     .catch(err => console.log(err));
 }
 

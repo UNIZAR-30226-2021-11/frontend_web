@@ -22,7 +22,7 @@ function login() {
     })
     .then(response => {
         if(response.ok) {
-            return response.json();
+            return response.text();
         }
         else {
             alert("Fallo al iniciar sesión.");
@@ -30,8 +30,22 @@ function login() {
         }
     })
     .then(data => {
-        console.log(data);
-        window.location.href = "../code/lobby.html";
+        let foo = data.split(",");
+        let index = foo[0].lastIndexOf("\"");
+        let token = foo[0].slice(10, index);
+        sessionStorage.setItem('token', token);
+
+        index = foo[1].lastIndexOf(":") + 1;
+        let index2 = foo[1].length;
+        let userId = foo[1].slice(index, index2);
+        sessionStorage.setItem('id', userId);
+
+        index = foo[2].lastIndexOf(":") + 2;
+        index2 = foo[2].length - 1;
+        let user = foo[2].slice(index, index2);
+        sessionStorage.setItem('username', user);
+
+        window.location.href = "lobby.html";
     })
     .catch(err => console.log(err));
 }

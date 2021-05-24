@@ -4,14 +4,14 @@ let boton3 = document.querySelector(".botonPerfil");
 let boton4 = document.querySelector(".botonLogout");
 
 boton1.onclick = function() {
-    window.location.href = "../code/tableroJuego.html";
+    window.location.href = "tableroJuego.html";
 }
 boton2.onclick = function() {
-    window.location.href = "../code/onlineInicio.html";
+    window.location.href = "onlineInicio.html";
 }
 boton3.onclick = function() {
-    window.location.href = "../code/perfil.html";
+    window.location.href = "perfil.html";
 }
 boton4.onclick = function() {
-    window.location.href = "../code/index.html"
+    window.location.href = "index.html"
 }

@@ -1,32 +1,29 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="../styles/perfil.css">
-    <title>Guiñote-Mañosoft</title>
-</head>
-
-<body>
-    <div id="pantalla">
-        <a id="back" href="lobby.html"><img src="../images/left_arrow.svg" alt="Botón de ir hacia atrás" width="60" height="60"></a>
-        <form id="userSearch" action="#" method="get">
-            <input id="username" type="text" name="user" value="Username" alt="Escriba nombre de usuario">
-            <input type="submit" value="Buscar">
-        </form>
-        <aside>
-            <button class="button" type="button" onclick="location.href='index.html'">LOG OUT</button><br>
-            <button class="button" type="button" onclick="location.href='index.html'">Borrar cuenta</button><br>
-            <button class="button" type="button" onclick="location.href='historial.html'">Historial completo</button>
-        </aside>
-        <!-- Añadir las estadisticas y el contenido de la tabla en js -->
-        <div id="content">
-            <p><b>Nombre:</b></p>
-            <p><b>Estadísticas online</b></p>
-            <p><b>Partidas:</b></p>
-            <p><b>Victorias:</b></p>
-        </div>
-        <div id="tablaHistorial">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="../styles/perfil.css">
+        <title>Guiñote-Mañosoft</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@500&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div id="pantalla">
+            <a id="back" href="lobby.html"><img src="../images/left_arrow.svg" alt="Botón de ir hacia atrás" width="60" height="60"></a>
+            <form id="userSearch">
+                <input id="username" type="text" name="user" placeholder="Escriba un nombre de usuario" alt="Escriba nombre de usuario a buscar">
+                <input type="button" value="Buscar" class="buscarUsuario">
+            </form>
+            <aside>
+                <img src="../images/gears.svg" class="engranaje"></img>
+                <button class="botonHistorial" type="button">Historial completo</button><br>
+            </aside>
+            <!-- Añadir las estadisticas y el contenido de la tabla en js -->
+            <div id="content">
+                <p><b>Nombre: </b><span class="username"></span></p>
+                <p><b>Partidas ganadas: </b><span class="victorias"></span></p>
+                <p><b>Partidas perdidas: </b><span class="derrotas"></span></p>
+            </div>
             <table id="historialCorto">
                 <tr>
                     <th>Duración</th>
@@ -34,41 +31,29 @@
                     <th>Resultado</th>
                     <th>Puntuación</th>
                 </tr>
-                <tr>
-                    <td>25:05</td>
-                    <td>Partida1</td>
-                    <td>Victoria</td>
-                    <td>103 - 38</td>
-                </tr>
-                <tr>
-                    <td>25:05</td>
-                    <td>Partida2</td>
-                    <td>Derrota</td>
-                    <td>103 - 38</td>
-                </tr>
-                <tr>
-                    <td>25:05</td>
-                    <td>Partida3</td>
-                    <td>Derrota</td>
-                    <td>103 - 38</td>
-                </tr>
-                <tr>
-                    <td>25:05</td>
-                    <td>Partida4</td>
-                    <td>Victoria</td>
-                    <td>103 - 38</td>
-                </tr>
-                <tr>
-                    <td>25:05</td>
-                    <td>Partida5</td>
-                    <td>Victoria</td>
-                    <td>103 - 38</td>
-                </tr>
+                <div class="historialPartidas">                
+                </div>
             </table>
+            <div class="banner">
+                <p>Elige reverso de las cartas</p>
+                <div class="reversos">
+                    <img src="../images/reverso.png" class="reverso1"></img>
+                    <img src="../images/reverso.png" class="reverso2"></img>
+                    <img src="../images/reverso.png" class="reverso3"></img>
+                </div>
+                <p>Elige tablero de juego</p>
+                <div class="tableros">
+                    <img src="../images/casino_table.jpg" class="tablero1"></img>
+                    <img src="../images/casino_table.jpg" class="tablero2"></img>
+                    <img src="../images/casino_table.jpg" class="tablero3"></img>
+                </div>
+                <div class="guardar">
+                    <button type="button" class="botonGuardar">Guardar cambios</button>
+                    <button type="button" class="botonDescartar">Descartar cambios</button>
+                </div>
+                <div class="borrar"><button type="button" class="botonBorrar">Borrar cuenta</button></div>
+            </div>
         </div>
-
-    </div>
-    <script src="../scripts/perfil.js"></script>
-</body>
-
+        <script src="../scripts/perfil.js"></script>
+    </body>
 </html>

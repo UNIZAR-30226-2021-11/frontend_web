@@ -1,5 +1,6 @@
 html {
     height: 100%;
+    font-family: 'Kiwi Maru', serif;
 }
 
 #pantalla {
@@ -7,7 +8,7 @@ html {
     min-height: 100%;
 }
 
-.button {
+.equipo1, .equipo2 {
     width: 250px;
     height: 80px;
     border: 2px solid #555555;
@@ -18,40 +19,43 @@ html {
     text-decoration: none;
     display: inline-block;
     font-size: 20px;
-    margin: 4px 2px;
+    margin: 20px 2px;
     cursor: pointer;
     background-color: #e7e7e7;
     color: black;
     margin-bottom: 30px;
 }
 
-.button:disabled {
-    opacity: 0%;
+.equipo1:disabled, .equipo2:disabled {
+    opacity: 50%;
     cursor: default;
 }
 
-#iniciarPartida {
+.iniciarPartida {
     display: block;
     margin: auto;
-    margin-top: 10px;
+    margin-top: 100px;
+    width: 25%;
+    height: 50px;
+    font-size: large;
 }
 
-#codigoPartida {
+.idPartida {
     float: right;
-    font-size: 18px;
+    font-size: 40px;
 }
 
-#content {
+.content {
     margin: auto;
     width: 80%;
     padding: 10px;
 }
 
-#equipo1 {
+.equipo1 {
     margin-left: 20%;
 }
 
-#equipo2 {
+.equipo2 {
     margin-left: 27%;
 }
 
