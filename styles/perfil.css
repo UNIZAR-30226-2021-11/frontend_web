@@ -1,5 +1,6 @@
 html {
     height: 100%;
+    font-family: 'Kiwi Maru', serif;
 }
 
 #pantalla {
@@ -13,7 +14,7 @@ html {
     float: left;
 }
 
-.button {
+button {
     width: 250px;
     height: 80px;
     border: 2px solid #555555;
@@ -52,7 +53,7 @@ aside {
 #historialCorto {
     margin: auto;
     width: 90%;
-    margin-top: 10px;
+    margin-top: 250px;
     border-collapse: collapse;
     border: 1px solid black;
     border-radius: 8px;
@@ -82,7 +83,7 @@ aside {
 }
 
 input[type=text] {
-    width: 220px;
+    width: 300px;
     height: 50px;
     border: 2px solid #555555;
     border-radius: 8px;
@@ -96,7 +97,7 @@ input[type=text] {
     font-size: 20px;
 }
 
-input[type=submit] {
+input[type=button] {
     width: 120px;
     height: 60px;
     border: 2px solid #555555;
@@ -111,4 +112,87 @@ input[type=submit] {
     color: black;
     display: inline-block;
     font-size: 20px;
+}
+
+.engranaje {
+    width: 30%;
+    height: 20%;
+    float: right;
+    margin-right: 80px;
+    margin-bottom: 20px;
+}
+
+.banner {
+    height: 100%;
+    width: 30%;
+    border: solid black;
+    position: fixed;
+    right: 0;
+    top: 0;
+    background-color: whitesmoke;
+    opacity: 90%;
+}
+
+.reversos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.reversos img {
+    width: 30%;
+    margin: 5px;
+}
+
+.tableros {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tableros img {
+    width: 30%;
+    margin: 5px;
+}
+
+.guardar {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.borrar {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.botonBorrar {
+    height: fit-content;
+    font-size: small;
+}
+
+.botonBorrar:hover {
+    background-color: red;
+    color: white;
+}
+
+.banner p {
+    text-align: center;
+    font-size: large;
+}
+
+.engranaje:hover {
+    cursor: pointer;
+}
+
+.reversos *:hover {
+    cursor: pointer;
+    border: solid green;
+    border-radius: 15px;
+}
+
+.tableros *:hover {
+    cursor: pointer;
+    border: solid green;
 }

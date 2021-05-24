@@ -1,37 +1,34 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="../styles/salaEquipos.css">
-    <title>Guiñote-Mañosoft</title>
-</head>
-
-<body>
-    <div id="pantalla">
-        <div>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="../styles/salaEquipos.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@500&display=swap" rel="stylesheet">
+        <title>Guiñote-Mañosoft</title>
+    </head>
+    <body>
+        <div id="pantalla">
             <a href="onlineInicio.html"><img src="../images/left_arrow.svg" alt="Botón de ir hacia atrás" width="60" height="60"></a>
             <!-- Añadir el codigo con js -->
-            <span id="codigoPartida">Nombre de la sala: </span>
+            <span class="idPartida"></span>
+            <div class="content">
+                <!-- Añadir tanto el contenido de la tabla como los textos de los botones con el js que analice lo que nos devuelve el servidor -->
+                <button type="button" class="equipo1"></button>
+                <button type="button" class="equipo2"></button>
+                <table id="equipos">
+                    <tr>
+                        <td class="miembro1"></td>
+                        <td class="miembro3"></td>
+                    </tr>
+                    <tr>
+                        <td class="miembro2"></td>
+                        <td class="miembro4"></td>
+                    </tr>
+                </table>
+                <button type="button" class="iniciarPartida">Iniciar Partida</button>
+            </div>
         </div>
-
-        <div id="content">
-            <!-- Añadir tanto el contenido de la tabla como los textos de los botones con el js que analice lo que nos devuelve el servidor -->
-            <button class="button" id="equipo1">Join Equipo 1</button>
-            <button class="button" id="equipo2">Equipo 2 Lleno</button>
-            <table id="equipos">
-                <tr>
-                    <td>Pepe</td>
-                    <td>Luis</td>
-                </tr>
-                <tr>
-                    <td>---</td>
-                    <td>Ana</td>
-                </tr>
-            </table>
-            <button class="button" id="iniciarPartida" disabled>Iniciar Partida</button>
-        </div>
-    </div>
-</body>
-
+        <script src="../scripts/salaEquipos.js"></script>
+    </body>
 </html>

@@ -1,38 +1,52 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="../styles/crearPartida.css">
-    <title>Guiñote-Mañosoft</title>
-</head>
-
-<body>
-    <div id="pantalla">
-        <a href="onlineInicio.html"><img src="../images/left_arrow.svg" alt="Botón de ir hacia atrás" width="60" height="60"></a>
-        <h1>Creación partida</h1>
-        <form id="creaPartida" method="POST" action="salaEquipos.html">
-            <div class=" row ">
-                <div class="col1 ">
-                    <label for="nombreSala ">Nombre de la sala</label>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="../styles/crearPartida.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@500&display=swap" rel="stylesheet">
+        <title>Guiñote-Mañosoft</title>
+    </head>
+    <body>
+        <div id="pantalla">
+            <a href="onlineInicio.html"><img src="../images/left_arrow.svg" alt="Botón de ir hacia atrás" width="60" height="60"></a>
+            <h1>Crea una nueva partida</h1>
+            <form class="formulario">
+                <label for="idSala">Identificador de la sala</label>
+                <input type="text" id="idSala" name="idSala" placeholder="Escriba un identificador de sala">
+                <br>
+                <label for="esPublica">Partida pública</label>
+                <input type="checkbox" id="esPublica" name="esPublica">
+                <br>
+                <div class="crearPartida">
+                    <button type="button">Crear partida</button>
                 </div>
-                <div class="col2 ">
-                    <input id="nombreSala " name="nombreSala " type="text " value="Partida de Pepe ">
+            </form>
+            
+            <!--
+            <form id="creaPartida" method="POST" action="salaEquipos.html">
+                <div class=" row ">
+                    <div class="col1 ">
+                        <label for="nombreSala ">Nombre de la sala</label>
+                    </div>
+                    <div class="col2 ">
+                        <input id="nombreSala " name="nombreSala " type="text " value="Partida de Pepe ">
+                    </div>
                 </div>
-            </div>
-            <div class="row ">
-                <div class="col1 ">
-                    <label for="partidaPublica ">Pública</label>
+                <div class="row ">
+                    <div class="col1 ">
+                        <label for="partidaPublica ">Pública</label>
+                    </div>
+                    <div class="col2 ">
+                        <input id="partidaPublica " name="partidaPublica " type="checkbox " value="Publica ">
+                    </div>
                 </div>
-                <div class="col2 ">
-                    <input id="partidaPublica " name="partidaPublica " type="checkbox " value="Publica ">
+                <div class="row ">
+                    <input type="submit " value="Crear partida ">
                 </div>
-            </div>
-            <div class="row ">
-                <input type="submit " value="Crear partida ">
-            </div>
-        </form>
-    </div>
-</body>
-
+            </form>
+            -->
+        </div>
+        <script src="../scripts/crearPartida.js"></script>
+    </body>
 </html>
