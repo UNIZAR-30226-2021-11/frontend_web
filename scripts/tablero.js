@@ -1,5 +1,5 @@
 let username = sessionStorage.getItem('username');
-let gameId = parseInt(sessionStorage.getItem('numPartida'), 10);
+let gameId = parseInt(sessionStorage.getItem('idPartida'), 10);
 let playerId = parseInt(sessionStorage.getItem('id'), 10);
 let pairId = parseInt(sessionStorage.getItem('pairId'), 10);
 let creaPartida = sessionStorage.getItem('crearPartida');
@@ -137,7 +137,7 @@ function dibujar() {
         ctx.textBaseline = 'middle';
         ctx.font = 'bold 30px sans-serif';
         ctx.fillStyle = 'white';
-        let texto = "Nombre de la partida: " + sessionStorage.getItem('idPartida');
+        let texto = "Nombre de la partida: " + sessionStorage.getItem('nombrePartida');
         ctx.fillText(texto, 1900, 20);
         dibujarJuego(true);
     }, false)
