@@ -28,7 +28,7 @@ function cargando() {
     ctx.fillStyle = "white";
     ctx.fillText("Cargando...", window.innerWidth / 2, window.innerHeight / 2);
 }
-dibujar();
+
 //Establecido el WebSocket enviamos el primer mensaje para crear la partida
 ws.onopen = function(event) {
     console.log("WS abierto...");
@@ -174,7 +174,7 @@ function preloadImagesHand() {
     var encontrado = false;
     if (playerId != null) {
         for (i = 0; i < 4 && !encontrado; i++) {
-            if (gameState.game_state.players.players[i].id == myId) {
+            if (gameState.game_state.players.players[i].id == playerId) {
                 encontrado = true;
                 me = i;
                 for (j = 0; j < 6; j++) {
