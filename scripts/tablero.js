@@ -2,8 +2,8 @@ let username = sessionStorage.getItem('username');
 let gameId = sessionStorage.getItem('numPartida');
 let playerId = sessionStorage.getItem('id');
 let pairId = sessionStorage.getItem('pairId');
-
-let ws = new WebSocket("ws:192.168.1.141:9000/simulation");
+let creaPartida = sessionStorage.getItem('pairId');
+let ws = new WebSocket("ws:15.188.14.213:11050/simulation");
 let singlePlayer = sessionStorage.getItem('singlePlayer');
 let cartas = [];
 let botones = [];
@@ -32,14 +32,14 @@ function cargando() {
 ws.onopen = function(event) {
     console.log("WS abierto...");
     cargando();
-    if (singlePlayer) { //Modo Single Player
+    if (singlePlayer == "true") { //Modo Single Player
         var msg = {
-            "game_id": gameId,
+            "game_id": 86, //gameId
             "player_id": playerId,
             "username": username,
             "event_type": 8,
         };
-    } else if (creaPartida == true) { //Modo Online (Crear Partida)
+    } else if (creaPartida == "true") { //Modo Online (Crear Partida)
         var msg = {
             "game_id": gameId,
             "player_id": playerId,
@@ -62,6 +62,7 @@ ws.onopen = function(event) {
 
 //Procesa el mensaje recibido
 ws.onmessage = function(event) {
+    console.log("Mensaje recibido");
     gameState = JSON.parse(event.data);
     if (gameState.status == "votePause") { //Votar pausa
         dibujarVotacion();
@@ -243,7 +244,7 @@ function dibujarBotones(firstR) {
     buttons.forEach(function(b, idx) {
         if (!(gameState.game_state.players.players[me].can_sing == false && (b.id == 4 || b.id == 5)) &&
             !(gameState.game_state.players.players[me].can_change == false && (b.id == 2 || b.id == 3)) &&
-            (!singlePlayer && (b.id == 1))) {
+            (singlePlayer == false && (b.id == 1))) {
             ctx.clearRect(b.x - 1, b.y - 1, b.w + 2, b.h + 2);
             ctx.fillStyle = b.fill;
             ctx.fillRect(b.x, b.y, b.w, b.h);
@@ -377,7 +378,7 @@ function botonPulsado(boton) {
             window.location.href = "lobby.html";
             break;
         case 1: //solicitar pausa
-            if (!singlePlayer) {
+            if (singlePlayer == false) {
                 msg = {
                     "game_id": gameId,
                     "player_id": playerId,

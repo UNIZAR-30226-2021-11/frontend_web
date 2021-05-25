@@ -33,6 +33,8 @@ function crearPartida() {
         let numPartida = json.game.id;
         sessionStorage.setItem('idPartida', idPartida);
         sessionStorage.setItem('numPartida', numPartida);
+        sessionStorage.setItem('pairId', json.game.my_pair_id);
+        sessionStorage.setItem('crearPartida', true);
 
         window.location.href = "salaEquipos.html";
     })
