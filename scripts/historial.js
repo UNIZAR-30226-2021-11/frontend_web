@@ -1,7 +1,7 @@
 let id_hist = sessionStorage.getItem('id_hist');
 let token = sessionStorage.getItem('token');
 
-fetch(`http://localhost:9000/api/v1/games/user/${id_hist}`, {
+fetch(`http://15.188.14.213:11050/api/v1/games/user/${id_hist}`, {
     method: "GET",
     headers: {
         Authorization: `Bearer ${token}`

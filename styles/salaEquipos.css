@@ -40,6 +40,13 @@ html {
     font-size: large;
 }
 
+.iniciarPartida:hover {
+    background-color: green;
+    border: solid black;
+    color: white;
+    cursor: pointer;
+}
+
 .idPartida {
     float: right;
     font-size: 40px;

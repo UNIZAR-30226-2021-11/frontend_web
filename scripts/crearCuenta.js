@@ -14,7 +14,7 @@ function crearUsuario(e) {
     });
 
     //fetch("http://15.188.14.213:11050/api/v1/users/", {
-    fetch("http://localhost:9000/api/v1/users/", {
+    fetch("http://15.188.14.213:11050/api/v1/users/", {
         method: "POST",
         headers: {
             //Accept: "application/json",
@@ -25,6 +25,8 @@ function crearUsuario(e) {
     .then(response => {
         if(response.ok) {
             alert("Usuario creado correctamente.");
+            localStorage.setItem(`${username}_reverso`, 1);
+            localStorage.setItem(`${username}_tablero`, 1);
             window.location.href = "index.html";
         }
         else {
@@ -38,5 +40,5 @@ function crearUsuario(e) {
 botonSubmit.addEventListener('click', crearUsuario);
 
 atras.onclick = function() {
-    window.location.href = "../code/index.html";
+    window.location.href = "index.html";
 }

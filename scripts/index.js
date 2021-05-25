@@ -2,7 +2,7 @@ let botonRegistro = document.querySelector(".crearCuenta");
 let botonLogin = document.querySelector(".acceder");
 
 botonRegistro.onclick = function() {
-    window.location.href = "../code/crearCuenta.html";
+    window.location.href = "crearCuenta.html";
 }
 
 function login() {
@@ -13,7 +13,7 @@ function login() {
         password: pass
     });
 
-    fetch("http://localhost:9000/api/v1/users/login/", {
+    fetch("http://15.188.14.213:11050/api/v1/users/login/", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -30,21 +30,10 @@ function login() {
         }
     })
     .then(data => {
-        let foo = data.split(",");
-        let index = foo[0].lastIndexOf("\"");
-        let token = foo[0].slice(10, index);
-        sessionStorage.setItem('token', token);
-
-        index = foo[1].lastIndexOf(":") + 1;
-        let index2 = foo[1].length;
-        let userId = foo[1].slice(index, index2);
-        sessionStorage.setItem('id', userId);
-
-        index = foo[2].lastIndexOf(":") + 2;
-        index2 = foo[2].length - 1;
-        let user = foo[2].slice(index, index2);
-        sessionStorage.setItem('username', user);
-
+        let json = JSON.parse(data);
+        sessionStorage.setItem('token', json.token);
+        sessionStorage.setItem('id', json.user.id);
+        sessionStorage.setItem('username', json.user.username);
         window.location.href = "lobby.html";
     })
     .catch(err => console.log(err));
