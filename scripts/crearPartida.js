@@ -11,7 +11,7 @@ function crearPartida() {
         public: esPublica
     });
 
-    fetch(`http://localhost:9000/api/v1/games/${id}`, {
+    fetch(`http://15.188.14.213:11050/api/v1/games/${id}`, {
         method: "POST",
         headers: {
             Authorization: `Bearer ${token}`
@@ -33,7 +33,6 @@ function crearPartida() {
         let numPartida = json.game.id;
         sessionStorage.setItem('idPartida', idPartida);
         sessionStorage.setItem('numPartida', numPartida);
-        sessionStorage.setItem('partidaCreada', true);
 
         window.location.href = "salaEquipos.html";
     })

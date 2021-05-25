@@ -8,7 +8,7 @@ let json = {}
 
 document.querySelector(".banner").style.display = 'none';
 
-fetch(`http://localhost:9000/api/v1/users/${username}`, {
+fetch(`http://15.188.14.213:11050/api/v1/users/${username}`, {
     method: "GET",
     headers: {
         Authorization: `Bearer ${token}`
@@ -33,7 +33,7 @@ fetch(`http://localhost:9000/api/v1/users/${username}`, {
 .catch(err => console.log(err));
 
 
-fetch(`http://localhost:9000/api/v1/games/user/${id}`, {
+fetch(`http://15.188.14.213:11050/api/v1/games/user/${id}`, {
     method: "GET",
     headers: {
         Authorization: `Bearer ${token}`
@@ -77,7 +77,7 @@ function buscarUsuario() {
 
     let usuario = perfilBuscado.value;
     if(usuario != "") {
-        fetch(`http://localhost:9000/api/v1/users/${usuario}`, {
+        fetch(`http://15.188.14.213:11050/api/v1/users/${usuario}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`
@@ -102,7 +102,7 @@ function buscarUsuario() {
         })
         .catch(err => console.log(err));
 
-        fetch(`http://localhost:9000/api/v1/games/user/${idHistorial}`, {
+        fetch(`http://15.188.14.213:11050/api/v1/games/user/${idHistorial}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`
@@ -143,7 +143,7 @@ function buscarUsuario() {
 }
 
 function borrarCuenta() {
-    fetch(`http://localhost:9000/api/v1/users/${id}`, {
+    fetch(`http://15.188.14.213:11050/api/v1/users/${id}`, {
         method: "DELETE",
         headers: {
             Authorization: `Bearer ${token}`
@@ -152,6 +152,9 @@ function borrarCuenta() {
     .then(response => {
         if(response.ok) {
             alert("Cuenta eliminada satisfactoriamente.");
+            sessionStorage.clear();
+            localStorage.removeItem(`${username}_reverso`);
+            localStorage.removeItem(`${username}_tablero`);
             window.location.href = "index.html";
         }
         else {

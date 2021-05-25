@@ -1,5 +1,12 @@
 html {
     font-family: 'Kiwi Maru', serif;
+    height: 100%;
+}
+
+body {
+    background-image: url("../images/imageedit_4_5777372365.png");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 h1 {

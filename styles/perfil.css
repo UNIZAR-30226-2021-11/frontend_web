@@ -141,6 +141,7 @@ input[type=button] {
 
 .reversos img {
     width: 30%;
+    height: 220px;
     margin: 5px;
 }
 
@@ -152,6 +153,7 @@ input[type=button] {
 
 .tableros img {
     width: 30%;
+    height: 150px;
     margin: 5px;
 }
 

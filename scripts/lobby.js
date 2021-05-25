@@ -13,5 +13,6 @@ boton3.onclick = function() {
     window.location.href = "perfil.html";
 }
 boton4.onclick = function() {
+    sessionStorage.clear();
     window.location.href = "index.html"
 }
