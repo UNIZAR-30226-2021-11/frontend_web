@@ -4,6 +4,8 @@ let boton3 = document.querySelector(".botonPerfil");
 let boton4 = document.querySelector(".botonLogout");
 
 boton1.onclick = function() {
+    sessionStorage.setItem('singlePlayer', true);
+
     window.location.href = "tableroJuego.html";
 }
 boton2.onclick = function() {

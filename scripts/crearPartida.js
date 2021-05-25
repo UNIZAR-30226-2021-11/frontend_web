@@ -12,31 +12,31 @@ function crearPartida() {
     });
 
     fetch(`http://15.188.14.213:11050/api/v1/games/${id}`, {
-        method: "POST",
-        headers: {
-            Authorization: `Bearer ${token}`
-        },
-        body: jsonData
-    })
-    .then(response => {
-        if(response.ok) {
-            return response.text();
-        }
-        else {
-            alert("Fallo al crear la partida.");
-            throw "Respuesta incorrecta por parte del servidor";
-        }
-    })
-    .then(data => {
-        let json = JSON.parse(data);
-        let idPartida = json.game.name;
-        let numPartida = json.game.id;
-        sessionStorage.setItem('idPartida', idPartida);
-        sessionStorage.setItem('numPartida', numPartida);
-
-        window.location.href = "salaEquipos.html";
-    })
-    .catch(err => console.log(err));
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            body: jsonData
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.text();
+            } else {
+                alert("Fallo al crear la partida.");
+                throw "Respuesta incorrecta por parte del servidor";
+            }
+        })
+        .then(data => {
+            let json = JSON.parse(data);
+            let idPartida = json.game.name;
+            let numPartida = json.game.id;
+            sessionStorage.setItem('idPartida', idPartida);
+            sessionStorage.setItem('numPartida', numPartida);
+            sessionStorage.setItem('pairId', json.game.my_pair_id);
+            sessionStorage.setItem('crearPartida', true);
+            window.location.href = "salaEquipos.html";
+        })
+        .catch(err => console.log(err));
 }
 
 botonCrear.addEventListener('click', crearPartida);
