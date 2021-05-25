@@ -85,37 +85,39 @@ ws.onmessage = function(event) {
 
         window.location.href = "lobby.html";
     } else if (gameState.status == "normal") { //Juego normal
-        if (gameState.game_state.current_round == 0) { //Primera ronda
-            dibujar();
+        if ((gameState.game_state.current_round == 0) && (gameState.game_state.cards_played_round == null)) { //Primera ronda
+            dibujar(true);
         } else if (gameState.game_state.ended && (gameState.game_state.winner_pair != null)) { //Fin de la partida
             dibujarVictoria();
         } else { //Juego
-            dibujarJuego(false);
+            dibujar(false);
         }
     }
 }
 
-//Dibuja el tablero y la primera ronda
-function dibujar() {
+//Dibuja el tablero de juegp
+function dibujar(firstR) {
     var c = document.getElementById("tablero");
     var ctx = c.getContext("2d");
     c.height = window.innerHeight;
-    c.addEventListener('click', function(evt) { //Detección de eventos de click en el canvas
-        var mousePos = getMousePos(c, evt);
-        if (gameState.status == "votePause") { //Click en votación de pausa
-            var i = isInside(mousePos, botonesP)
-            if (i >= 0) {
-                botonPulsado(i);
+    if (firstR) {
+        c.addEventListener('click', function(evt) { //Detección de eventos de click en el canvas
+            var mousePos = getMousePos(c, evt);
+            if (gameState.status == "votePause") { //Click en votación de pausa
+                var i = isInside(mousePos, botonesP)
+                if (i >= 0) {
+                    botonPulsado(i);
+                }
+            } else if (gameState.game_state.ended) { //Click con la partida terminada
+                botonPulsado(0);
+            } else { //Click en situaciones normales
+                var i = isInside(mousePos, botones)
+                if (i >= 0) {
+                    botonPulsado(i);
+                }
             }
-        } else if (gameState.game_state.ended) { //Click con la partida terminada
-            botonPulsado(0);
-        } else { //Click en situaciones normales
-            var i = isInside(mousePos, botones)
-            if (i >= 0) {
-                botonPulsado(i);
-            }
-        }
-    }, false);
+        }, false);
+    }
     var tablero = new Image();
     switch (localStorage.getItem(`${username}_tablero`)) { //Cargamos el tablero
         case "1":
@@ -138,16 +140,11 @@ function dibujar() {
         ctx.fillStyle = 'white';
         let texto = sessionStorage.getItem('idPartida');
         ctx.fillText(texto, 1900, 20);
-        dibujarJuego(true);
+        dibujarMano();
+        dibujarMesa();
+        dibujarBotones(firstR);
+        dibujarPila();
     }, false)
-}
-
-//Dibuja el estado actual del juego
-function dibujarJuego(firstR) {
-    dibujarMano();
-    dibujarMesa();
-    dibujarBotones(firstR);
-    dibujarPila();
 }
 
 //Dibuja las cartas de la mano del jugador
@@ -179,6 +176,8 @@ function preloadImagesHand() {
                 for (j = 0; j < 6; j++) {
                     if (gameState.game_state.players.players[i].cards[j] != null) {
                         cartas[j].src = '../images/' + gameState.game_state.players.players[i].cards[j].suit + '_' + gameState.game_state.players.players[i].cards[j].val + '.png';
+                    } else {
+                        cartas[j].src = '';
                     }
                 }
             }
@@ -239,9 +238,11 @@ function dibujarPila() {
 //Carga las imagenes de las cartas de la pila
 function preloadImagesPila(p) {
     if (gameState.game_state.cards_played_round != null) {
-        for (i = 0; i < gameState.game_state.cards_played_round.length && i < 4; i++) {
-            if ((gameState.game_state.cards_played_round[i] != null)) {
+        for (i = 0; i < 4; i++) {
+            if (i < gameState.game_state.cards_played_round.length) {
                 p[i].src = '../images/' + gameState.game_state.cards_played_round[i].suit + '_' + gameState.game_state.cards_played_round[i].val + '.png';
+            } else {
+                p[i].src = '';
             }
         }
     }
