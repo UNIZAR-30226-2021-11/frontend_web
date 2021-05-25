@@ -1,255 +1,141 @@
-let obj = {
-    "status": "normal",
-    "game_state": {
-        "points_team_a": 0,
-        "points_team_b": 11,
-        "points_sing_a": 0,
-        "points_sing_b": 0,
-        "current_round": 2,
-        "players": {
-            "players": [{
-                    "cards": [{
-                            "suit": "bastos",
-                            "val": 5,
-                            "points": 0,
-                            "playable": true
-                        },
-                        {
-                            "suit": "espadas",
-                            "val": 1,
-                            "points": 11,
-                            "playable": true
-                        },
-                        {
-                            "suit": "oros",
-                            "val": 1,
-                            "points": 11,
-                            "playable": true
-                        },
-                        {
-                            "suit": "espadas",
-                            "val": 2,
-                            "points": 0,
-                            "playable": true
-                        },
-                        {
-                            "suit": "espadas",
-                            "val": 7,
-                            "points": 0,
-                            "playable": true
-                        },
-                        null
-                    ],
-                    "id": 43,
-                    "pair": 1,
-                    "username": "",
-                    "can_play": false,
-                    "can_sing": false,
-                    "sing_suit": "",
-                    "can_change": false,
-                    "singing_suits": null
-                },
-                {
-                    "cards": [{
-                            "suit": "bastos",
-                            "val": 10,
-                            "points": 3,
-                            "playable": true
-                        },
-                        {
-                            "suit": "copas",
-                            "val": 10,
-                            "points": 3,
-                            "playable": true
-                        },
-                        {
-                            "suit": "espadas",
-                            "val": 3,
-                            "points": 10,
-                            "playable": true
-                        },
-                        {
-                            "suit": "bastos",
-                            "val": 11,
-                            "points": 2,
-                            "playable": true
-                        },
-                        {
-                            "suit": "copas",
-                            "val": 7,
-                            "points": 0,
-                            "playable": true
-                        },
-                        null
-                    ],
-                    "id": 42,
-                    "pair": 2,
-                    "username": "",
-                    "can_play": true,
-                    "can_sing": false,
-                    "sing_suit": "",
-                    "can_change": true,
-                    "singing_suits": null
-                },
-                {
-                    "cards": [{
-                            "suit": "oros",
-                            "val": 3,
-                            "points": 10,
-                            "playable": true
-                        },
-                        {
-                            "suit": "copas",
-                            "val": 12,
-                            "points": 4,
-                            "playable": true
-                        },
-                        {
-                            "suit": "copas",
-                            "val": 4,
-                            "points": 0,
-                            "playable": true
-                        },
-                        {
-                            "suit": "oros",
-                            "val": 10,
-                            "points": 3,
-                            "playable": true
-                        },
-                        {
-                            "suit": "oros",
-                            "val": 5,
-                            "points": 0,
-                            "playable": true
-                        },
-                        null
-                    ],
-                    "id": 41,
-                    "pair": 1,
-                    "username": "",
-                    "can_play": false,
-                    "can_sing": false,
-                    "sing_suit": "",
-                    "can_change": false,
-                    "singing_suits": null
-                },
-                {
-                    "cards": [{
-                            "suit": "bastos",
-                            "val": 6,
-                            "points": 0,
-                            "playable": true
-                        },
-                        {
-                            "suit": "bastos",
-                            "val": 12,
-                            "points": 4,
-                            "playable": true
-                        },
-                        {
-                            "suit": "oros",
-                            "val": 12,
-                            "points": 4,
-                            "playable": true
-                        },
-                        {
-                            "suit": "bastos",
-                            "val": 1,
-                            "points": 11,
-                            "playable": true
-                        },
-                        {
-                            "suit": "espadas",
-                            "val": 4,
-                            "points": 0,
-                            "playable": true
-                        },
-                        null
-                    ],
-                    "id": 40,
-                    "pair": 2,
-                    "username": "",
-                    "can_play": false,
-                    "can_sing": false,
-                    "sing_suit": "",
-                    "can_change": false,
-                    "singing_suits": null
-                }
-            ]
-        },
-        "triumph_card": {
-            "suit": "copas",
-            "val": 5,
-            "points": 0,
-            "playable": false
-        },
-        "vueltas": false,
-        "arrastre": false,
-        "ended": false,
-        "winner_pair": 2,
-        "cards_played_round": [{
-                "suit": "oros",
-                "val": 7,
-                "points": 0,
-                "playable": true
-            },
-            {
-                "suit": "oros",
-                "val": 6,
-                "points": 0,
-                "playable": true
-            },
-            {
-                "suit": "espadas",
-                "val": 10,
-                "points": 3,
-                "playable": true
-            },
-            {
-                "suit": "espadas",
-                "val": 11,
-                "points": 2,
-                "playable": true
-            }
-        ]
-    }
-}
+let username = sessionStorage.getItem('username');
+let gameId = sessionStorage.getItem('numPartida');
+let playerId = sessionStorage.getItem('id');
+let pairId = sessionStorage.getItem('pairId');
+
+let ws = new WebSocket("ws:192.168.1.141:9000/simulation");
+let singlePlayer = sessionStorage.getItem('singlePlayer');
 let cartas = [];
 let botones = [];
+let botonesP = [];
 for (i = 0; i < 6; i++) {
     cartas.push(new Image());
     botones.push(null);
 }
-var me = 0;
+let me = 0;
+
+let gameState;
 
 
-document.addEventListener('DOMContentLoaded', dibujar());
+function cargando() {
+    var c = document.getElementById("tablero");
+    var ctx = c.getContext("2d");
 
-var c = document.getElementById("tablero");
-var ctx = c.getContext("2d");
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.font = 'bold 30px sans-serif';
+    ctx.fillStyle = "white";
+    ctx.fillText("Cargando...", window.innerWidth / 2, window.innerHeight / 2);
+}
 
-//Binding the click event on the canvas
-c.addEventListener('click', function(evt) {
-    var mousePos = getMousePos(c, evt);
-    console.log(mousePos.x + ',' + mousePos.y)
-    var i = isInside(mousePos, botones)
-    if (i >= 0) {
-        alert('clicked ' + i + ' boton');
+//Establecido el WebSocket enviamos el primer mensaje para crear la partida
+ws.onopen = function(event) {
+    console.log("WS abierto...");
+    cargando();
+    if (singlePlayer) { //Modo Single Player
+        var msg = {
+            "game_id": gameId,
+            "player_id": playerId,
+            "username": username,
+            "event_type": 8,
+        };
+    } else if (creaPartida == true) { //Modo Online (Crear Partida)
+        var msg = {
+            "game_id": gameId,
+            "player_id": playerId,
+            "pair_id": pairId,
+            "username": username,
+            "event_type": 0,
+        }
+    } else { //Modo Online (Unirse a partida)
+        var msg = {
+            "game_id": gameId,
+            "player_id": playerId,
+            "pair_id": pairId,
+            "username": username,
+            "event_type": 1,
+        }
     }
-}, false);
+    console.log("Enviando mensaje: " + JSON.stringify(msg));
+    ws.send(JSON.stringify(msg));
+}
 
+//Procesa el mensaje recibido
+ws.onmessage = function(event) {
+    gameState = JSON.parse(event.data);
+    if (gameState.status == "votePause") { //Votar pausa
+        dibujarVotacion();
+    } else if (gameState.status == "paused") { //Pausado, toca salir
+        var msg = {
+            "game_id": gameId,
+            "player_id": playerId,
+            "event_type": 2,
+        };
+        ws.send(JSON.stringify(msg));
+        alert("Juego pausado, saliendo de la partida... ");
+
+        window.location.href = "lobby.html";
+    } else if (gameState.status == "normal") { //Juego normal
+        if (gameState.game_state.current_round == 1) { //Primera ronda
+            dibujar();
+        } else if (gameState.game_state.ended && (gameState.game_state.winner_pair != null)) { //Fin de la partida
+            dibujarVictoria();
+        } else { //Juego
+            dibujarJuego(false);
+        }
+    }
+}
+
+//Dibuja el tablero y la primera ronda
 function dibujar() {
     var c = document.getElementById("tablero");
     var ctx = c.getContext("2d");
     c.height = window.innerHeight;
-    var img = document.getElementById("tapete");
-    ctx.drawImage(img, 0, 0, 1920, 1080);
+    c.addEventListener('click', function(evt) { //Detección de eventos de click en el canvas
+        var mousePos = getMousePos(c, evt);
+        if (gameState.status == "votePause") { //Click en votación de pausa
+            var i = isInside(mousePos, botonesP)
+            if (i >= 0) {
+                botonPulsado(i);
+            }
+        } else if (gameState.game_state.ended) { //Click con la partida terminada
+            botonPulsado(0);
+        } else { //Click en situaciones normales
+            var i = isInside(mousePos, botones)
+            if (i >= 0) {
+                botonPulsado(i);
+            }
+        }
+    }, false);
+    var tablero = new Image();
+    switch (localStorage.getItem(`${username}_tablero`)) { //Cargamos el tablero
+        case "1":
+            tablero.src = '../images/casino_table.jpg';
+            break;
+        case "2":
+            tablero.src = '../images/casino_table_azul.jpg';
+            break;
+        case "3":
+            tablero.src = '../images/casino_table_rojo.jpg';
+            break;
+        default:
+            tablero.src = '../images/casino_table.jpg';
+    }
+    tablero.addEventListener('load', function() { //Mostramos el tablero una vez haya cargado la imagen
+        ctx.drawImage(tablero, 0, 0, 1920, 1080);
+        dibujarJuego(true);
+    }, false)
+}
+
+//Dibuja el estado actual del juego
+function dibujarJuego(firstR) {
     dibujarMano();
     dibujarMesa();
-    dibujarBotones();
+    dibujarBotones(firstR);
     dibujarPila();
 }
 
+//Dibuja las cartas de la mano del jugador
 function dibujarMano() {
     var c = document.getElementById("tablero");
     var ctx = c.getContext("2d");
@@ -258,7 +144,7 @@ function dibujarMano() {
         botones[idx] = mkBoton(idx + 6, 245 * (idx + 1), 600, 200, 319);
         carta.addEventListener('load', function() {
             ctx.save();
-            if (obj.game_state.players.players[me].can_play == false || obj.game_state.players.players[me].cards[idx].playable == false) {
+            if (gameState.game_state.players.players[me].can_play == false || gameState.game_state.players.players[me].cards[idx].playable == false) {
                 ctx.globalAlpha = 0.5;
             }
             ctx.drawImage(carta, 250 * (idx + 1), 600);
@@ -267,22 +153,60 @@ function dibujarMano() {
     });
 }
 
-function dibujarMesa() {
-    var c = document.getElementById("tablero");
-    var ctx = c.getContext("2d");
-    var triunfo = new Image();
-    triunfo.src = '../images/' + obj.game_state.triumph_card.suit + '_' + obj.game_state.triumph_card.val + '.png';
-    triunfo.addEventListener('load', function() {
-        ctx.save();
-        ctx.translate(660, 0);
-        ctx.rotate(90 * Math.PI / 180);
-        ctx.drawImage(triunfo, 200, -120);
-        ctx.restore();
-        var monton = document.getElementById("reverso");
-        ctx.drawImage(monton, 450, 150);
-    }, false);
+//Carga las imagenes de las cartas
+function preloadImagesHand() {
+    var encontrado = false;
+    if (playerId != null) {
+        for (i = 0; i < 4 && !encontrado; i++) {
+            if (gameState.game_state.players.players[i].id == myId) {
+                encontrado = true;
+                me = i;
+                for (j = 0; j < 6; j++) {
+                    if (gameState.game_state.players.players[i].cards[j] != null) {
+                        cartas[j].src = '../images/' + gameState.game_state.players.players[i].cards[j].suit + '_' + gameState.game_state.players.players[i].cards[j].val + '.png';
+                    }
+                }
+            }
+        }
+    } else { alert("No hay id de sesion"); }
 }
 
+//Dibuja el monton y triunfo
+function dibujarMesa() {
+    if (!gameState.game_state.arrastre) {
+        var c = document.getElementById("tablero");
+        var ctx = c.getContext("2d");
+        var triunfo = new Image();
+        triunfo.src = '../images/' + gameState.game_state.triumph_card.suit + '_' + gameState.game_state.triumph_card.val + '.png';
+        triunfo.addEventListener('load', function() {
+            ctx.save();
+            ctx.translate(660, 0);
+            ctx.rotate(90 * Math.PI / 180);
+            ctx.drawImage(triunfo, 200, -120);
+            ctx.restore();
+            switch (localStorage.getItem(`${username}_reverso`)) {
+                case "1":
+                    monton.src = '../images/reverso.png';
+                    break;
+                case "2":
+                    monton.src = '../images/reverso_negro.png';
+                    break;
+                case "3":
+                    monton.src = '../images/reverso_rojo.jpg';
+                    break;
+                default:
+                    monton.src = '../images/reverso.png';
+            }
+        }, false);
+        var monton = new Image();
+
+        monton.addEventListener('load', function() {
+            ctx.drawImage(monton, 450, 150);
+        }, false);
+    }
+}
+
+//Dibuja la pila de cartas la ronda
 function dibujarPila() {
     var c = document.getElementById("tablero");
     var ctx = c.getContext("2d");
@@ -297,18 +221,29 @@ function dibujarPila() {
     });
 }
 
-function dibujarBotones() {
+//Carga las imagenes de las cartas de la pila
+function preloadImagesPila(p) {
+    for (i = 0; i < p.length && i < 4; i++) {
+        if (gameState.game_state.cards_played_round[i] != null) {
+            p[i].src = '../images/' + gameState.game_state.cards_played_round[i].suit + '_' + gameState.game_state.cards_played_round[i].val + '.png';
+        }
+    }
+}
+
+//Dibuja los botones del usuario
+function dibujarBotones(firstR) {
     var c = document.getElementById("tablero");
     var ctx = c.getContext("2d");
     var buttons = [];
-    buttons.push(makeButton(1, 25, 25, 250, 60, 'Solicitar pausa', 'gray', 'black', 'black', function() {}));
-    buttons.push(makeButton(2, 25, 95, 230, 60, 'Cambiar triunfo', 'gray', 'black', 'black', function() {}));
-    buttons.push(makeButton(3, 265, 95, 175, 60, 'No Cambiar', 'gray', 'black', 'black', function() {}));
-    buttons.push(makeButton(4, 25, 165, 230, 60, 'Cantar', 'gray', 'black', 'black', function() {}));
-    buttons.push(makeButton(5, 265, 165, 175, 60, 'No cantar', 'gray', 'black', 'black', function() {}));
+    buttons.push(makeButton(1, 25, 25, 250, 60, 'Solicitar pausa', 'gray', 'black', 'black'));
+    buttons.push(makeButton(2, 25, 95, 230, 60, 'Cambiar triunfo', 'gray', 'black', 'black'));
+    buttons.push(makeButton(3, 265, 95, 175, 60, 'No Cambiar', 'gray', 'black', 'black'));
+    buttons.push(makeButton(4, 25, 165, 230, 60, 'Cantar', 'gray', 'black', 'black'));
+    buttons.push(makeButton(5, 265, 165, 175, 60, 'No cantar', 'gray', 'black', 'black'));
     buttons.forEach(function(b, idx) {
-        if (!(obj.game_state.players.players[me].can_sing == false && (b.id == 4 || b.id == 5)) &&
-            !(obj.game_state.players.players[me].can_change == false && (b.id == 2 || b.id == 3))) {
+        if (!(gameState.game_state.players.players[me].can_sing == false && (b.id == 4 || b.id == 5)) &&
+            !(gameState.game_state.players.players[me].can_change == false && (b.id == 2 || b.id == 3)) &&
+            (!singlePlayer && (b.id == 1))) {
             ctx.clearRect(b.x - 1, b.y - 1, b.w + 2, b.h + 2);
             ctx.fillStyle = b.fill;
             ctx.fillRect(b.x, b.y, b.w, b.h);
@@ -319,40 +254,69 @@ function dibujarBotones() {
             ctx.font = 'bold 30px sans-serif';
             ctx.fillStyle = b.labelcolor;
             ctx.fillText(b.label, b.x + b.w / 2, b.y + b.h / 2);
-        }
-    });
-    botones.push(mkBoton(1, 25, 25, 250, 60));
-    botones.push(mkBoton(2, 25, 95, 230, 60));
-    botones.push(mkBoton(3, 265, 95, 175, 60));
-    botones.push(mkBoton(4, 25, 165, 230, 60));
-    botones.push(mkBoton(5, 265, 165, 175, 60));
-}
-
-function preloadImagesHand() {
-    var encontrado = false;
-    var myId = 43;
-    for (i = 0; i < 4 && !encontrado; i++) {
-        if (obj.game_state.players.players[i].id == myId) {
-            encontrado = true;
-            me = i;
-            for (j = 0; j < 6; j++) {
-                if (obj.game_state.players.players[i].cards[j] != null) {
-                    cartas[j].src = '../images/' + obj.game_state.players.players[i].cards[j].suit + '_' + obj.game_state.players.players[i].cards[j].val + '.png';
-                }
+            if (firstR) {
+                botones.push(mkBoton(b.id, b.x, b.y, b.w, b.h));
             }
         }
-    }
+    });
 }
 
-function preloadImagesPila(p) {
-    for (i = 0; i < p.length && i < 4; i++) {
-        if (obj.game_state.cards_played_round[i] != null) {
-            p[i].src = '../images/' + obj.game_state.cards_played_round[i].suit + '_' + obj.game_state.cards_played_round[i].val + '.png';
+//Muestra la interfaz de votacion de pausa
+function dibujarVotacion() {
+    var c = document.getElementById("tablero");
+    var ctx = c.getContext("2d");
+    var buttons = [];
+    buttons.push(makeButton(0, 560, 300, 800, 300, 'El equipo contrario a solicitado pausar la partida', 'white', 'black', 'black'));
+    buttons.push(makeButton(1, 585, 515, 250, 60, 'Aceptar', 'gray', 'black', 'black'));
+    buttons.push(makeButton(2, 1085, 515, 250, 60, 'Rechazar', 'gray', 'black', 'black'));
+    buttons.forEach(function(b, idx) {
+        ctx.clearRect(b.x - 1, b.y - 1, b.w + 2, b.h + 2);
+        ctx.fillStyle = b.fill;
+        ctx.fillRect(b.x, b.y, b.w, b.h);
+        ctx.strokeStyle = b.stroke;
+        ctx.strokeRect(b.x, b.y, b.w, b.h);
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.font = 'bold 30px sans-serif';
+        ctx.fillStyle = b.labelcolor;
+        if (b.id == 0) {
+            ctx.fillText(b.label, b.x + b.w / 2, b.y + b.h / 4);
+        } else {
+            ctx.fillText(b.label, b.x + b.w / 2, b.y + b.h / 2);
+            if (botonesP.length < 2) {
+                botonesP.push(mkBoton(b.id + 11, b.x, b.y, b.w, b.h));
+            }
+        }
+    });
+}
+
+//Muestra la interfaz de victoria
+function dibujarVictoria() {
+    var c = document.getElementById("tablero");
+    var ctx = c.getContext("2d");
+    var b = makeButton(0, 560, 300, 800, 300, `Victoria del equipo ${gameState.game_state.winner_pair}`, 'white', 'black', 'black');
+    ctx.clearRect(b.x - 1, b.y - 1, b.w + 2, b.h + 2);
+    ctx.fillStyle = b.fill;
+    ctx.globalAlpha = 0.9;
+    ctx.fillRect(b.x, b.y, b.w, b.h);
+    ctx.strokeStyle = b.stroke;
+    ctx.strokeRect(b.x, b.y, b.w, b.h);
+    ctx.globalAlpha = 1;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.font = 'bold 30px sans-serif';
+    ctx.fillStyle = b.labelcolor;
+    ctx.fillText(b.label, b.x + b.w / 2, b.y + b.h / 4);
+    var idx = 2;
+    for (i = 0; i < 4; i++) {
+        if (gameState.game_state.winner_pair == gameState.game_state.players.players[i].pair) {
+            ctx.fillText(gameState.game_state.players.players[i].username, b.x + b.w / 2, b.y + b.h * idx / 4);
+            idx++;
         }
     }
 }
 
-function makeButton(id, x, y, w, h, label, fill, stroke, labelcolor, clickFn) {
+function makeButton(id, x, y, w, h, label, fill, stroke, labelcolor) {
     return ({
         id: id,
         x: x,
@@ -363,7 +327,6 @@ function makeButton(id, x, y, w, h, label, fill, stroke, labelcolor, clickFn) {
         stroke: stroke,
         labelcolor: labelcolor,
         label: label,
-        click: clickFn,
     });
 }
 
@@ -399,5 +362,177 @@ function isInside(pos, botones) {
     return id;
 }
 
-//var ws = new WebSocket("ws:http://15.188.14.213:11050/simulation");
-var ws = new WebSocket("ws:http://192.168.1.141:9000/simulation");
+function botonPulsado(boton) {
+    var msg = null;
+    switch (boton) {
+        case 0: //Fin de la partida
+            msg = {
+                "game_id": gameId,
+                "player_id": playerId,
+                "event_type": 2,
+            };
+            ws.send(JSON.stringify(msg));
+            alert("Partida terminada, saliendo... ");
+
+            window.location.href = "lobby.html";
+            break;
+        case 1: //solicitar pausa
+            if (!singlePlayer) {
+                msg = {
+                    "game_id": gameId,
+                    "player_id": playerId,
+                    "event_type": 6,
+                };
+            }
+            break;
+        case 2: //cambiar triunfo
+            if (gameState.game_state.players.players[me].can_change == true) {
+                msg = {
+                    "game_id": gameId,
+                    "player_id": playerId,
+                    "changed": true,
+                    "event_type": 4,
+                };
+            }
+            break;
+        case 3: //no cambiar triunfo
+            if (gameState.game_state.players.players[me].can_change == true) {
+                msg = {
+                    "game_id": gameId,
+                    "player_id": playerId,
+                    "changed": false,
+                    "event_type": 4,
+                };
+            }
+            break;
+        case 4: //cantar
+            if (gameState.game_state.players.players[me].can_sing == true) {
+                msg = {
+                    "game_id": gameId,
+                    "player_id": playerId,
+                    "suit": gameState.game_state.players.players[me].sing_suit,
+                    "has_singed": true,
+                    "event_type": 5,
+                };
+            }
+            break;
+        case 5: //no cantar
+            if (gameState.game_state.players.players[me].can_sing == true) {
+                msg = {
+                    "game_id": gameId,
+                    "player_id": playerId,
+                    "suit": gameState.game_state.players.players[me].sing_suit,
+                    "has_singed": false,
+                    "event_type": 5,
+                };
+            }
+            break;
+        case 6: //tirar carta 1
+            if (gameState.game_state.players.players[me].can_play == true && gameState.game_state.players.players[me].can_change == false &&
+                gameState.game_state.players.players[me].can_sing == false) {
+                msg = {
+                    "game_id": gameId,
+                    "player_id": playerId,
+                    "card": {
+                        "suit": gameState.game_state.players.players[me].cards[0].suit,
+                        "val": gameState.game_state.players.players[me].cards[0].val,
+                    },
+                    "event_type": 3,
+                };
+            }
+            break;
+        case 7: //tirar carta 2
+            if (gameState.game_state.players.players[me].can_play == true && gameState.game_state.players.players[me].can_change == false &&
+                gameState.game_state.players.players[me].can_sing == false && gameState.game_state.players.players[me].cards[1] != null) {
+                msg = {
+                    "game_id": gameId,
+                    "player_id": playerId,
+                    "card": {
+                        "suit": gameState.game_state.players.players[me].cards[1].suit,
+                        "val": gameState.game_state.players.players[me].cards[1].val,
+                    },
+                    "event_type": 3,
+                };
+            }
+            break;
+        case 8: //tirar carta 3
+            if (gameState.game_state.players.players[me].can_play == true && gameState.game_state.players.players[me].can_change == false &&
+                gameState.game_state.players.players[me].can_sing == false && gameState.game_state.players.players[me].cards[2] != null) {
+                msg = {
+                    "game_id": gameId,
+                    "player_id": playerId,
+                    "card": {
+                        "suit": gameState.game_state.players.players[me].cards[2].suit,
+                        "val": gameState.game_state.players.players[me].cards[2].val,
+                    },
+                    "event_type": 3,
+                };
+            }
+            break;
+        case 9: //tirar carta 4
+            if (gameState.game_state.players.players[me].can_play == true && gameState.game_state.players.players[me].can_change == false &&
+                gameState.game_state.players.players[me].can_sing == false && gameState.game_state.players.players[me].cards[3] != null) {
+                msg = {
+                    "game_id": gameId,
+                    "player_id": playerId,
+                    "card": {
+                        "suit": gameState.game_state.players.players[me].cards[3].suit,
+                        "val": gameState.game_state.players.players[me].cards[3].val,
+                    },
+                    "event_type": 3,
+                };
+            }
+            break;
+        case 10: //tirar carta 5
+            if (gameState.game_state.players.players[me].can_play == true && gameState.game_state.players.players[me].can_change == false &&
+                gameState.game_state.players.players[me].can_sing == false && gameState.game_state.players.players[me].cards[4] != null) {
+                msg = {
+                    "game_id": gameId,
+                    "player_id": playerId,
+                    "card": {
+                        "suit": gameState.game_state.players.players[me].cards[4].suit,
+                        "val": gameState.game_state.players.players[me].cards[4].val,
+                    },
+                    "event_type": 3,
+                };
+            }
+            break;
+        case 11: //tirar carta 6
+            if (gameState.game_state.players.players[me].can_play == true && gameState.game_state.players.players[me].can_change == false &&
+                gameState.game_state.players.players[me].can_sing == false && gameState.game_state.players.players[me].cards[5] != null) {
+                msg = {
+                    "game_id": gameId,
+                    "player_id": playerId,
+                    "card": {
+                        "suit": gameState.game_state.players.players[me].cards[5].suit,
+                        "val": gameState.game_state.players.players[me].cards[5].val,
+                    },
+                    "event_type": 3,
+                };
+            }
+            break;
+        case 12: //votacion de pausa aceptada
+            if (gameState.status == "votePause") {
+                msg = {
+                    "game_id": gameId,
+                    "player_id": playerId,
+                    "vote": true,
+                    "event_type": 7,
+                };
+            }
+            break;
+        case 13: //votacion de pausa rechazada
+            if (gameState.status == "votePause") {
+                msg = {
+                    "game_id": gameId,
+                    "player_id": playerId,
+                    "vote": false,
+                    "event_type": 7,
+                };
+            }
+            break;
+    }
+    if (msg != null) {
+        ws.send(JSON.stringify(msg));
+    }
+}
