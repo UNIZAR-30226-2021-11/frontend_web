@@ -1,6 +1,6 @@
 let username = sessionStorage.getItem('username');
 let gameId = parseInt(sessionStorage.getItem('idPartida'), 10);
-let playerId = parseInt(sessionStorage.getItem('id'), 10);
+let playerId = parseInt(sessionStorage.getItem('playerId'), 10);
 let pairId = parseInt(sessionStorage.getItem('pairId'), 10);
 let creaPartida = sessionStorage.getItem('crearPartida');
 
@@ -45,7 +45,6 @@ ws.onopen = function(event) {
             "event_type": 8,
         };
     } else if (creaPartida == "true") { //Modo Online (Crear Partida)
-
         var msg = {
             "game_id": gameId,
             "player_id": playerId,
@@ -71,7 +70,7 @@ ws.onopen = function(event) {
 
 //Procesa el mensaje recibido
 ws.onmessage = function(event) {
-    console.log("Mensaje recibido...");
+    console.log("Mensaje recibido... \n" + event.data);
     gameState = JSON.parse(event.data);
     if (gameState.status == "votePause") { //Votar pausa
         dibujarVotacion();
@@ -86,7 +85,7 @@ ws.onmessage = function(event) {
 
         window.location.href = "lobby.html";
     } else if (gameState.status == "normal") { //Juego normal
-        if (gameState.game_state.current_round == 1) { //Primera ronda
+        if (gameState.game_state.current_round == 0) { //Primera ronda
             dibujar();
         } else if (gameState.game_state.ended && (gameState.game_state.winner_pair != null)) { //Fin de la partida
             dibujarVictoria();
@@ -137,7 +136,7 @@ function dibujar() {
         ctx.textBaseline = 'middle';
         ctx.font = 'bold 30px sans-serif';
         ctx.fillStyle = 'white';
-        let texto = "Nombre de la partida: " + sessionStorage.getItem('nombrePartida');
+        let texto = sessionStorage.getItem('idPartida');
         ctx.fillText(texto, 1900, 20);
         dibujarJuego(true);
     }, false)
@@ -239,9 +238,11 @@ function dibujarPila() {
 
 //Carga las imagenes de las cartas de la pila
 function preloadImagesPila(p) {
-    for (i = 0; i < p.length && i < 4; i++) {
-        if (gameState.game_state.cards_played_round[i] != null) {
-            p[i].src = '../images/' + gameState.game_state.cards_played_round[i].suit + '_' + gameState.game_state.cards_played_round[i].val + '.png';
+    if (gameState.game_state.cards_played_round != null) {
+        for (i = 0; i < gameState.game_state.cards_played_round.length && i < 4; i++) {
+            if ((gameState.game_state.cards_played_round[i] != null)) {
+                p[i].src = '../images/' + gameState.game_state.cards_played_round[i].suit + '_' + gameState.game_state.cards_played_round[i].val + '.png';
+            }
         }
     }
 }
@@ -380,6 +381,7 @@ function isInside(pos, botones) {
 
 function botonPulsado(boton) {
     var msg = null;
+
     switch (boton) {
         case 0: //Fin de la partida
             msg = {
@@ -551,4 +553,5 @@ function botonPulsado(boton) {
     if (msg != null) {
         ws.send(JSON.stringify(msg));
     }
+    console.log("boton pulsado " + boton + ", mensaje: " + JSON.stringify(msg));
 }

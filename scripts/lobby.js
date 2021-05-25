@@ -47,6 +47,7 @@ function crearPartida() {
             sessionStorage.setItem('nombrePartida', json.game.name);
             sessionStorage.setItem('idPartida', json.game.id);
             sessionStorage.setItem('pairId', json.game.my_pair_id);
+            sessionStorage.setItem('playerId', json.game.my_player_id);
             sessionStorage.setItem('crearPartida', true);
             sessionStorage.setItem('singlePlayer', true);
 
