@@ -2,7 +2,8 @@ let username = sessionStorage.getItem('username');
 let gameId = sessionStorage.getItem('numPartida');
 let playerId = sessionStorage.getItem('id');
 let pairId = sessionStorage.getItem('pairId');
-let creaPartida = sessionStorage.getItem('pairId');
+let creaPartida = sessionStorage.getItem('crearPartida');
+
 let ws = new WebSocket("ws:15.188.14.213:11050/simulation");
 let singlePlayer = sessionStorage.getItem('singlePlayer');
 let cartas = [];
@@ -16,7 +17,7 @@ let me = 0;
 
 let gameState;
 
-
+//
 function cargando() {
     var c = document.getElementById("tablero");
     var ctx = c.getContext("2d");
@@ -34,24 +35,24 @@ ws.onopen = function(event) {
     cargando();
     if (singlePlayer == "true") { //Modo Single Player
         var msg = {
-            "game_id": 86, //gameId
-            "player_id": playerId,
+            "game_id": parseInt(gameId, 10),
+            "player_id": parseInt(playerId, 10),
             "username": username,
             "event_type": 8,
         };
     } else if (creaPartida == "true") { //Modo Online (Crear Partida)
         var msg = {
-            "game_id": gameId,
-            "player_id": playerId,
-            "pair_id": pairId,
+            "game_id": parseInt(gameId, 10),
+            "player_id": parseInt(playerId, 10),
+            "pair_id": parseInt(pairId, 10),
             "username": username,
             "event_type": 0,
         }
     } else { //Modo Online (Unirse a partida)
         var msg = {
-            "game_id": gameId,
-            "player_id": playerId,
-            "pair_id": pairId,
+            "game_id": parseInt(gameId, 10),
+            "player_id": parseInt(playerId, 10),
+            "pair_id": parseInt(pairId, 10),
             "username": username,
             "event_type": 1,
         }
@@ -62,14 +63,14 @@ ws.onopen = function(event) {
 
 //Procesa el mensaje recibido
 ws.onmessage = function(event) {
-    console.log("Mensaje recibido");
+    console.log("Mensaje recibido...");
     gameState = JSON.parse(event.data);
     if (gameState.status == "votePause") { //Votar pausa
         dibujarVotacion();
     } else if (gameState.status == "paused") { //Pausado, toca salir
         var msg = {
-            "game_id": gameId,
-            "player_id": playerId,
+            "game_id": parseInt(gameId, 10),
+            "player_id": parseInt(playerId, 10),
             "event_type": 2,
         };
         ws.send(JSON.stringify(msg));
@@ -244,7 +245,7 @@ function dibujarBotones(firstR) {
     buttons.forEach(function(b, idx) {
         if (!(gameState.game_state.players.players[me].can_sing == false && (b.id == 4 || b.id == 5)) &&
             !(gameState.game_state.players.players[me].can_change == false && (b.id == 2 || b.id == 3)) &&
-            (singlePlayer == false && (b.id == 1))) {
+            ((singlePlayer == "false") && (b.id == 1))) {
             ctx.clearRect(b.x - 1, b.y - 1, b.w + 2, b.h + 2);
             ctx.fillStyle = b.fill;
             ctx.fillRect(b.x, b.y, b.w, b.h);
@@ -368,8 +369,8 @@ function botonPulsado(boton) {
     switch (boton) {
         case 0: //Fin de la partida
             msg = {
-                "game_id": gameId,
-                "player_id": playerId,
+                "game_id": parseInt(gameId, 10),
+                "player_id": parseInt(playerId, 10),
                 "event_type": 2,
             };
             ws.send(JSON.stringify(msg));
@@ -378,10 +379,10 @@ function botonPulsado(boton) {
             window.location.href = "lobby.html";
             break;
         case 1: //solicitar pausa
-            if (singlePlayer == false) {
+            if (singlePlayer == "false") {
                 msg = {
-                    "game_id": gameId,
-                    "player_id": playerId,
+                    "game_id": parseInt(gameId, 10),
+                    "player_id": parseInt(playerId, 10),
                     "event_type": 6,
                 };
             }
@@ -389,8 +390,8 @@ function botonPulsado(boton) {
         case 2: //cambiar triunfo
             if (gameState.game_state.players.players[me].can_change == true) {
                 msg = {
-                    "game_id": gameId,
-                    "player_id": playerId,
+                    "game_id": parseInt(gameId, 10),
+                    "player_id": parseInt(playerId, 10),
                     "changed": true,
                     "event_type": 4,
                 };
@@ -399,8 +400,8 @@ function botonPulsado(boton) {
         case 3: //no cambiar triunfo
             if (gameState.game_state.players.players[me].can_change == true) {
                 msg = {
-                    "game_id": gameId,
-                    "player_id": playerId,
+                    "game_id": parseInt(gameId, 10),
+                    "player_id": parseInt(playerId, 10),
                     "changed": false,
                     "event_type": 4,
                 };
@@ -409,8 +410,8 @@ function botonPulsado(boton) {
         case 4: //cantar
             if (gameState.game_state.players.players[me].can_sing == true) {
                 msg = {
-                    "game_id": gameId,
-                    "player_id": playerId,
+                    "game_id": parseInt(gameId, 10),
+                    "player_id": parseInt(playerId, 10),
                     "suit": gameState.game_state.players.players[me].sing_suit,
                     "has_singed": true,
                     "event_type": 5,
@@ -420,8 +421,8 @@ function botonPulsado(boton) {
         case 5: //no cantar
             if (gameState.game_state.players.players[me].can_sing == true) {
                 msg = {
-                    "game_id": gameId,
-                    "player_id": playerId,
+                    "game_id": parseInt(gameId, 10),
+                    "player_id": parseInt(playerId, 10),
                     "suit": gameState.game_state.players.players[me].sing_suit,
                     "has_singed": false,
                     "event_type": 5,
@@ -432,8 +433,8 @@ function botonPulsado(boton) {
             if (gameState.game_state.players.players[me].can_play == true && gameState.game_state.players.players[me].can_change == false &&
                 gameState.game_state.players.players[me].can_sing == false) {
                 msg = {
-                    "game_id": gameId,
-                    "player_id": playerId,
+                    "game_id": parseInt(gameId, 10),
+                    "player_id": parseInt(playerId, 10),
                     "card": {
                         "suit": gameState.game_state.players.players[me].cards[0].suit,
                         "val": gameState.game_state.players.players[me].cards[0].val,
@@ -446,8 +447,8 @@ function botonPulsado(boton) {
             if (gameState.game_state.players.players[me].can_play == true && gameState.game_state.players.players[me].can_change == false &&
                 gameState.game_state.players.players[me].can_sing == false && gameState.game_state.players.players[me].cards[1] != null) {
                 msg = {
-                    "game_id": gameId,
-                    "player_id": playerId,
+                    "game_id": parseInt(gameId, 10),
+                    "player_id": parseInt(playerId, 10),
                     "card": {
                         "suit": gameState.game_state.players.players[me].cards[1].suit,
                         "val": gameState.game_state.players.players[me].cards[1].val,
@@ -460,8 +461,8 @@ function botonPulsado(boton) {
             if (gameState.game_state.players.players[me].can_play == true && gameState.game_state.players.players[me].can_change == false &&
                 gameState.game_state.players.players[me].can_sing == false && gameState.game_state.players.players[me].cards[2] != null) {
                 msg = {
-                    "game_id": gameId,
-                    "player_id": playerId,
+                    "game_id": parseInt(gameId, 10),
+                    "player_id": parseInt(playerId, 10),
                     "card": {
                         "suit": gameState.game_state.players.players[me].cards[2].suit,
                         "val": gameState.game_state.players.players[me].cards[2].val,
@@ -474,8 +475,8 @@ function botonPulsado(boton) {
             if (gameState.game_state.players.players[me].can_play == true && gameState.game_state.players.players[me].can_change == false &&
                 gameState.game_state.players.players[me].can_sing == false && gameState.game_state.players.players[me].cards[3] != null) {
                 msg = {
-                    "game_id": gameId,
-                    "player_id": playerId,
+                    "game_id": parseInt(gameId, 10),
+                    "player_id": parseInt(playerId, 10),
                     "card": {
                         "suit": gameState.game_state.players.players[me].cards[3].suit,
                         "val": gameState.game_state.players.players[me].cards[3].val,
@@ -488,8 +489,8 @@ function botonPulsado(boton) {
             if (gameState.game_state.players.players[me].can_play == true && gameState.game_state.players.players[me].can_change == false &&
                 gameState.game_state.players.players[me].can_sing == false && gameState.game_state.players.players[me].cards[4] != null) {
                 msg = {
-                    "game_id": gameId,
-                    "player_id": playerId,
+                    "game_id": parseInt(gameId, 10),
+                    "player_id": parseInt(playerId, 10),
                     "card": {
                         "suit": gameState.game_state.players.players[me].cards[4].suit,
                         "val": gameState.game_state.players.players[me].cards[4].val,
@@ -502,8 +503,8 @@ function botonPulsado(boton) {
             if (gameState.game_state.players.players[me].can_play == true && gameState.game_state.players.players[me].can_change == false &&
                 gameState.game_state.players.players[me].can_sing == false && gameState.game_state.players.players[me].cards[5] != null) {
                 msg = {
-                    "game_id": gameId,
-                    "player_id": playerId,
+                    "game_id": parseInt(gameId, 10),
+                    "player_id": parseInt(playerId, 10),
                     "card": {
                         "suit": gameState.game_state.players.players[me].cards[5].suit,
                         "val": gameState.game_state.players.players[me].cards[5].val,
@@ -515,8 +516,8 @@ function botonPulsado(boton) {
         case 12: //votacion de pausa aceptada
             if (gameState.status == "votePause") {
                 msg = {
-                    "game_id": gameId,
-                    "player_id": playerId,
+                    "game_id": parseInt(gameId, 10),
+                    "player_id": parseInt(playerId, 10),
                     "vote": true,
                     "event_type": 7,
                 };
@@ -525,8 +526,8 @@ function botonPulsado(boton) {
         case 13: //votacion de pausa rechazada
             if (gameState.status == "votePause") {
                 msg = {
-                    "game_id": gameId,
-                    "player_id": playerId,
+                    "game_id": parseInt(gameId, 10),
+                    "player_id": parseInt(playerId, 10),
                     "vote": false,
                     "event_type": 7,
                 };
