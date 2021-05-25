@@ -3,7 +3,9 @@ let boton2 = document.querySelector(".botonJugarOnline");
 let boton3 = document.querySelector(".botonPerfil");
 let boton4 = document.querySelector(".botonLogout");
 
-boton1.onclick = crearPartida();
+boton1.onclick = function() {
+    crearPartida();
+};
 
 boton2.onclick = function() {
     window.location.href = "onlineInicio.html";
@@ -21,8 +23,8 @@ function crearPartida() {
     let token = sessionStorage.getItem('token');
 
     const jsonData = JSON.stringify({
-        name: "PartidaSolo",
-        public: false,
+        name: `PartidaSolo_${sessionStorage.getItem('username')}_${Date.now()}`,
+        public: false
     });
 
     fetch(`http://15.188.14.213:11050/api/v1/games/${id}`, {
