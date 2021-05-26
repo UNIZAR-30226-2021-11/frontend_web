@@ -136,11 +136,13 @@ function dibujar(firstR) {
     var ctx = c.getContext("2d");
     c.height = window.innerHeight;
     c.width = window.innerWidth;
-    fuente = `bold ${40*dimensiones.escalaTablero}px sans-serif`;
+    fuente = `bold ${30*dimensiones.escalaTablero}px sans-serif`;
     var help = document.getElementById("ayuda");
     var tablero = new Image();
     if (firstR) {
-        botones.push(mkBoton(14, 1760, 50, 80, 80));
+        botones.push(mkBoton(14, (c.width - 100) / dimensiones.escalaTablero, 50, 80, 80));
+        console.log(c.width);
+        console.log(botones[6].x);
         c.addEventListener('click', function(evt) { //Detección de eventos de click en el canvas
             var mousePos = getMousePos(c, evt);
             if (gameState.status == "votePause") { //Click en votación de pausa
@@ -157,6 +159,8 @@ function dibujar(firstR) {
                 }
             }
         }, false);
+    } else {
+        botones[6] = mkBoton(14, (c.width - 100) / dimensiones.escalaTablero, 50, 80, 80);
     }
     switch (localStorage.getItem(`${username}_tablero`)) { //Cargamos el tablero
         case "1":
@@ -332,7 +336,7 @@ function dibujarBotones(firstR) {
         if (firstR) {
             botones.push(mkBoton(b.id, b.x / dimensiones.escalaTablero, b.y / dimensiones.escalaTablero, b.w / dimensiones.escalaTablero, b.h / dimensiones.escalaTablero));
         } else {
-            botones[b.id + 5] = mkBoton(b.id, b.x / dimensiones.escalaTablero, b.y / dimensiones.escalaTablero, b.w / dimensiones.escalaTablero, b.h / dimensiones.escalaTablero);
+            botones[b.id + 6] = mkBoton(b.id, b.x / dimensiones.escalaTablero, b.y / dimensiones.escalaTablero, b.w / dimensiones.escalaTablero, b.h / dimensiones.escalaTablero);
         }
         dibujo = false;
     });
