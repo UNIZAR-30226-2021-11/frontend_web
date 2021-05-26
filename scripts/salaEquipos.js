@@ -35,6 +35,8 @@ function obtenerParejas() {
     .then(data => {
         let json = JSON.parse(data);
         let jugadorJoined = false;
+        idEquipo1 = json.game.pairs[0].id;
+        idEquipo2 = json.game.pairs[1].id;
         if(json.game.pairs[0].users != null) {
             if(json.game.pairs[0].users[0].username == username) {
                 jugadorJoined = true;
@@ -110,6 +112,7 @@ function joinEquipo1() {
             user_id: idAux,
             pair_id: idEquipo1
         });
+        console.log(idEquipo1);
         fetch("http://15.188.14.213:11050/api/v1/players/", {
             method: "POST",
             headers: {

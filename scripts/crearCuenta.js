@@ -13,8 +13,7 @@ function crearUsuario(e) {
         password: pass
     });
 
-    //fetch("http://15.188.14.213:11050/api/v1/users/", {
-    fetch("http://192.168.1.141:9000/api/v1/users/", {
+    fetch("http://15.188.14.213:11050/api/v1/users/", {
             method: "POST",
             headers: {
                 //Accept: "application/json",
