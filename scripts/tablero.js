@@ -12,12 +12,15 @@ var dimensiones = {
     altoTablero: 1080,
     escalaTablero: 1,
     iniciar: function() {
+        this.escalarTablero();
         window.addEventListener('resize', function(evento) {
             dimensiones.ancho = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
             dimensiones.alto = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
             dimensiones.escalarTablero();
             console.log("Resize:: " + dimensiones.ancho + " x " + dimensiones.alto + "; EscalaTablero:: " + dimensiones.escalaTablero)
-            dibujar(false);
+            if (gameState != null) {
+                dibujar(false);
+            }
         });
     },
     escalarTablero: function() {
@@ -34,7 +37,7 @@ var dimensiones = {
 let ws = new WebSocket("ws:15.188.14.213:11050/simulation");
 let singlePlayer = sessionStorage.getItem('singlePlayer');
 dimensiones.iniciar();
-let fuente = `bold ${40*dimensiones.escalaTablero}px sans-serif`;
+let fuente = `bold ${30*dimensiones.escalaTablero}px sans-serif`;
 let anchoCarta = 208;
 let altoCarta = 319;
 let cartas = [];
@@ -46,7 +49,7 @@ for (i = 0; i < 6; i++) {
 }
 let me = 0;
 
-let gameState;
+let gameState = null;
 
 
 
