@@ -35,8 +35,8 @@ function obtenerParejas() {
     .then(data => {
         let json = JSON.parse(data);
         let jugadorJoined = false;
-        if(json.game.pairs[1].users != null) {
-            if(json.game.pairs[1].users[0].username == username) {
+        if(json.game.pairs[0].users != null) {
+            if(json.game.pairs[0].users[0].username == username) {
                 jugadorJoined = true;
             }
             userAux = json.game.pairs[0].users[0].username;
@@ -78,7 +78,7 @@ function obtenerParejas() {
 function joinEquipo1() {
     // antes de unirse, comprobar que el equipo1 no este completo
     let equipoCompleto = false;
-    fetch(`http://15.188.14.213:11050/api/v1/games/${numPartida}`, {
+    fetch(`http://15.188.14.213:11050/api/v1/games/${idPartida}`, {
         method: "GET",
         headers: {
             Authorization: `Bearer ${token}`
@@ -137,7 +137,7 @@ function joinEquipo1() {
 function joinEquipo2() {
     // antes de unirse, comprobar que el equipo2 no este completo
     let equipoCompleto = false;
-    fetch(`http://15.188.14.213:11050/api/v1/games/${numPartida}`, {
+    fetch(`http://15.188.14.213:11050/api/v1/games/${idPartida}`, {
         method: "GET",
         headers: {
             Authorization: `Bearer ${token}`
