@@ -23,7 +23,7 @@ function crearPartida() {
     let token = sessionStorage.getItem('token');
 
     const jsonData = JSON.stringify({
-        name: `PartidaSolo_${sessionStorage.getItem('username')}_${Date.now()}`,
+        name: `PartidaSolo_${sessionStorage.getItem('username')}`,
         public: false
     });
 
