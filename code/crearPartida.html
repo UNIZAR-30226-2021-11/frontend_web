@@ -10,10 +10,10 @@
     <body>
         <div id="pantalla">
             <a href="onlineInicio.html"><img src="../images/left_arrow.svg" alt="Botón de ir hacia atrás" width="60" height="60"></a>
-            <h1>Crea una nueva partida</h1>
+            <h1>Crear una nueva partida</h1>
             <form class="formulario">
-                <label for="idSala">Identificador de la sala</label>
-                <input type="text" id="idSala" name="idSala" placeholder="Escriba un identificador de sala">
+                <label for="idSala">Nombre de la partida</label>
+                <input type="text" id="idSala" name="idSala" placeholder="Escriba un nombre para la partida">
                 <br>
                 <label for="esPublica">Partida pública</label>
                 <input type="checkbox" id="esPublica" name="esPublica">
@@ -22,30 +22,6 @@
                     <button type="button">Crear partida</button>
                 </div>
             </form>
-            
-            <!--
-            <form id="creaPartida" method="POST" action="salaEquipos.html">
-                <div class=" row ">
-                    <div class="col1 ">
-                        <label for="nombreSala ">Nombre de la sala</label>
-                    </div>
-                    <div class="col2 ">
-                        <input id="nombreSala " name="nombreSala " type="text " value="Partida de Pepe ">
-                    </div>
-                </div>
-                <div class="row ">
-                    <div class="col1 ">
-                        <label for="partidaPublica ">Pública</label>
-                    </div>
-                    <div class="col2 ">
-                        <input id="partidaPublica " name="partidaPublica " type="checkbox " value="Publica ">
-                    </div>
-                </div>
-                <div class="row ">
-                    <input type="submit " value="Crear partida ">
-                </div>
-            </form>
-            -->
         </div>
         <script src="../scripts/crearPartida.js"></script>
     </body>

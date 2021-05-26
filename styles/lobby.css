@@ -1,31 +1,43 @@
 html {
     font-family: 'Kiwi Maru', serif;
+    height: 100%;
+}
+
+body {
+    background-image: url("../images/guinote_background.png");
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 h1 {
     font-size: 200px;
     text-align: center;
-    margin: auto auto 200px auto;
+    margin: 100px auto 200px auto;
 }
 
 .botonLogout {
     position: absolute;
     top: 5%;
-    right: 3%;
+    left: 3%;
     font-size: large;
     height: 30px;
     width: 200px;
+    border-radius: 50px;
+    cursor: pointer;
 }
 
 .botonLogout:hover {
-    background-color: red;
+    background-color: brown;
     color: white;
     border: solid black;
 }
 
 .logotipo {
-    width: 15%;
-    height: 15%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 270px;
+    height: 200px;
 }
 
 .botones {

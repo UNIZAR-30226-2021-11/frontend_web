@@ -1,5 +1,13 @@
 html {
     font-family: 'Kiwi Maru', serif;
+    height: 100%;
+}
+
+body {
+    background-image: url("../images/guinote_background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 h1 {
@@ -15,8 +23,8 @@ h2 {
 }
 
 .logotipo {
-    width: 15%;
-    height: 15%;
+    width: 270px;
+    height: 200px;
     position: absolute;
     top: 0;
     right: 0;
@@ -28,6 +36,7 @@ h2 {
     left: 2%;
     height: 5%;
     width: 5%;
+    cursor: pointer;
 }
 
 .botones {

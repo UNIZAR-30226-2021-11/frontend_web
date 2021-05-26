@@ -31,22 +31,6 @@ html {
     cursor: default;
 }
 
-.iniciarPartida {
-    display: block;
-    margin: auto;
-    margin-top: 100px;
-    width: 25%;
-    height: 50px;
-    font-size: large;
-}
-
-.iniciarPartida:hover {
-    background-color: green;
-    border: solid black;
-    color: white;
-    cursor: pointer;
-}
-
 .idPartida {
     float: right;
     font-size: 40px;

@@ -44,43 +44,29 @@ atras.onclick = function() {
     window.location.href = "onlineInicio.html";
 }
 
-let botonBuscar = document.querySelector(".botonBuscar");
-botonBuscar.onclick = function() {
+document.querySelector(".botonBuscar").onclick = function() {
     let query = document.querySelector(".buscador").value;
-    let lista = document.querySelector(".listaPartidas");
-    lista.innerHTML =
-        `<tr>
-            <th>Identificador de la partida</th>
-            <th>Entrar en la sala</th>
-        </tr>`;
         
     if(query != "") {
-        for(let i=0; i<json.games.length; i++) {
-            if(query == json.games[i].name) {
-                lista.innerHTML +=
-                `<tr>
-                    <td>${json.games[i].name}</td>
-                    <td><button type="button" class="join${i}">Unirse</button>
-                </tr>`;
-                document.querySelector(`.join${i}`).onclick = function() {
-                    sessionStorage.setItem('numPartida', `${json.games[i].id}`);
-                    sessionStorage.setItem('idPartida', `${json.games[i].name}`);
-                    window.location.href = "salaEquipos.html";
-                }
+        fetch(`http://15.188.14.213:11050/api/v1/games/${query}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
             }
-        }
-    }
-    else {
-        for(let i=0; i<json.games.length; i++) {
-            lista.innerHTML += `<tr>
-                                    <td>${json.games[i].name}</td>
-                                    <td><button type="button" class="join${i}">Unirse</button>
-                                </tr>`;
-            document.querySelector(`.join${i}`).onclick = function() {
-                sessionStorage.setItem('numPartida', `${json.games[i].id}`);
-                sessionStorage.setItem('idPartida', `${json.games[i].name}`);
-                window.location.href = "salaEquipos.html";
+        })
+        .then(response => {
+            if(response.ok) {
+                return response.text();
             }
-        }
+            else {
+                alert("No se ha podido encontrar la partida buscada.");
+                throw "Respesta incorrecta por parte del servidor";
+            }
+        })
+        .then(data => {
+            sessionStorage.setItem('numPartida', query);
+            window.location.href = "salaEquipos.html";
+        })
+        .catch(err => console.log(err));
     }
 }

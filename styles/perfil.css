@@ -3,6 +3,13 @@ html {
     font-family: 'Kiwi Maru', serif;
 }
 
+body {
+    background-image: url("../images/green-background.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 #pantalla {
     min-width: 100%;
     min-height: 100%;
@@ -42,6 +49,8 @@ aside {
     width: 80%;
     min-height: 40%;
     font-size: 26px;
+    color: gold;
+    text-shadow: -1px 0 green, 0 1px green, 1px 0 green, 0 -1px green;
 }
 
 #tablaHistorial {
