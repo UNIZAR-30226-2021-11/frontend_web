@@ -27,6 +27,9 @@ function cargando() {
     ctx.font = 'bold 30px sans-serif';
     ctx.fillStyle = "white";
     ctx.fillText("Cargando...", window.innerWidth / 2, window.innerHeight / 2);
+    ctx.textAlign = 'right';
+    let texto = sessionStorage.getItem('idPartida');
+    ctx.fillText(texto, 1900, 20);
 }
 
 //Establecido el WebSocket enviamos el primer mensaje para crear la partida
