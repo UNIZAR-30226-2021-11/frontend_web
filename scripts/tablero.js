@@ -4,8 +4,39 @@ let playerId = parseInt(sessionStorage.getItem('playerId'), 10);
 let pairId = parseInt(sessionStorage.getItem('pairId'), 10);
 let creaPartida = sessionStorage.getItem('crearPartida');
 
-let ws = new WebSocket("ws:192.168.1.141:9000/simulation");
+var dimensiones = {
+    ancho: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+    alto: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
+    escala: 1,
+    anchoTablero: 1920,
+    altoTablero: 1080,
+    escalaTablero: 1,
+    iniciar: function() {
+        window.addEventListener('resize', function(evento) {
+            dimensiones.ancho = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+            dimensiones.alto = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+            dimensiones.escalarTablero();
+            console.log("Resize:: " + dimensiones.ancho + " x " + dimensiones.alto + "; EscalaTablero:: " + dimensiones.escalaTablero)
+            dibujar(false);
+        });
+    },
+    escalarTablero: function() {
+        var escalaHorizontal = this.ancho / this.anchoTablero;
+        var escalaVertical = this.alto / this.altoTablero;
+        if (escalaHorizontal < escalaVertical) {
+            this.escalaTablero = escalaHorizontal;
+        } else {
+            this.escalaTablero = escalaVertical;
+        }
+    }
+};
+
+let ws = new WebSocket("ws:15.188.14.213:11050/simulation");
 let singlePlayer = sessionStorage.getItem('singlePlayer');
+dimensiones.iniciar();
+let fuente = `bold ${40*dimensiones.escalaTablero}px sans-serif`;
+let anchoCarta = 208;
+let altoCarta = 319;
 let cartas = [];
 let botones = [];
 let botonesP = [];
@@ -17,6 +48,8 @@ let me = 0;
 
 let gameState;
 
+
+
 //Muestra un texto de carga en pantalla
 function cargando() {
     var c = document.getElementById("tablero");
@@ -24,12 +57,10 @@ function cargando() {
 
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.font = 'bold 30px sans-serif';
+    ctx.font = fuente;
     ctx.fillStyle = "white";
     ctx.fillText("Cargando...", window.innerWidth / 2, window.innerHeight / 2);
-    ctx.textAlign = 'right';
-    let texto = sessionStorage.getItem('idPartida');
-    ctx.fillText(texto, 1900, 20);
+    dibujarIdSala();
 }
 
 //Establecido el WebSocket enviamos el primer mensaje para crear la partida
@@ -88,12 +119,10 @@ ws.onmessage = function(event) {
 
         window.location.href = "lobby.html";
     } else if (gameState.status == "normal") { //Juego normal
-        if ((gameState.game_state.current_round == 0) && (gameState.game_state.cards_played_round == null)) { //Primera ronda
-            dibujar(true);
-        } else if (gameState.game_state.ended && (gameState.game_state.winner_pair != null)) { //Fin de la partida
+        if (gameState.game_state.ended && (gameState.game_state.winner_pair != null)) { //Fin de la partida
             dibujarVictoria();
         } else { //Juego
-            dibujar(false);
+            dibujar((gameState.game_state.current_round == 0) && (gameState.game_state.cards_played_round == null));
         }
     }
 }
@@ -103,6 +132,8 @@ function dibujar(firstR) {
     var c = document.getElementById("tablero");
     var ctx = c.getContext("2d");
     c.height = window.innerHeight;
+    c.width = window.innerWidth;
+    fuente = `bold ${40*dimensiones.escalaTablero}px sans-serif`;
     var help = document.getElementById("ayuda");
     var tablero = new Image();
     if (firstR) {
@@ -138,14 +169,9 @@ function dibujar(firstR) {
             tablero.src = '../images/casino_table.jpg';
     }
     tablero.addEventListener('load', function() { //Mostramos el tablero una vez haya cargado la imagen
-        ctx.drawImage(tablero, 0, 0, 1920, 1080);
-        ctx.drawImage(help, 1820, 50, 80, 80);
-        ctx.textAlign = 'right';
-        ctx.textBaseline = 'middle';
-        ctx.font = 'bold 30px sans-serif';
-        ctx.fillStyle = 'white';
-        let texto = sessionStorage.getItem('idPartida');
-        ctx.fillText(texto, 1900, 20);
+        ctx.drawImage(tablero, 0, 0, c.width, c.height);
+        ctx.drawImage(help, c.width - 100 * dimensiones.escalaTablero, 50 * dimensiones.escalaTablero, 80 * dimensiones.escalaTablero, 80 * dimensiones.escalaTablero);
+        dibujarIdSala();
         dibujarMano(firstR);
         dibujarMesa();
         dibujarBotones(firstR);
@@ -167,7 +193,7 @@ function dibujarMano(firstR) {
                     console.log("Detectada carta no jugable " + gameState.game_state.players.players[me].cards[idx].val + "," + gameState.game_state.players.players[me].cards[idx].suit);
                     ctx.globalAlpha = 0.5;
                 }
-                ctx.drawImage(carta, 250 * (idx + 1), 600);
+                ctx.drawImage(carta, (250 * (idx + 1)) * dimensiones.escalaTablero, 600 * dimensiones.escalaTablero, anchoCarta * dimensiones.escalaTablero, altoCarta * dimensiones.escalaTablero);
                 ctx.restore();
             }, false);
         }
@@ -203,9 +229,9 @@ function dibujarMesa() {
         triunfo.src = '../images/' + gameState.game_state.triumph_card.suit + '_' + gameState.game_state.triumph_card.val + '.png';
         triunfo.addEventListener('load', function() {
             ctx.save();
-            ctx.translate(660, 0);
+            ctx.translate(660 * dimensiones.escalaTablero, 0 * dimensiones.escalaTablero);
             ctx.rotate(90 * Math.PI / 180);
-            ctx.drawImage(triunfo, 200, -120);
+            ctx.drawImage(triunfo, 200 * dimensiones.escalaTablero, -120 * dimensiones.escalaTablero, anchoCarta * dimensiones.escalaTablero, altoCarta * dimensiones.escalaTablero);
             ctx.restore();
             switch (localStorage.getItem(`${username}_reverso`)) {
                 case "1":
@@ -224,7 +250,7 @@ function dibujarMesa() {
         var monton = new Image();
 
         monton.addEventListener('load', function() {
-            ctx.drawImage(monton, 450, 150);
+            ctx.drawImage(monton, 450 * dimensiones.escalaTablero, 150 * dimensiones.escalaTablero, anchoCarta * dimensiones.escalaTablero, altoCarta * dimensiones.escalaTablero);
         }, false);
     }
 }
@@ -238,7 +264,7 @@ function dibujarPila() {
     pila.forEach(function(carta, idx) {
         carta.addEventListener('load', function() {
             ctx.save();
-            ctx.drawImage(carta, 1000 + (150 * idx), 150);
+            ctx.drawImage(carta, (1000 + (150 * idx)) * dimensiones.escalaTablero, 150 * dimensiones.escalaTablero, anchoCarta * dimensiones.escalaTablero, altoCarta * dimensiones.escalaTablero);
             ctx.restore();
         }, false);
     });
@@ -296,12 +322,14 @@ function dibujarBotones(firstR) {
             ctx.strokeRect(b.x, b.y, b.w, b.h);
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.font = 'bold 30px sans-serif';
+            ctx.font = fuente;
             ctx.fillStyle = b.labelcolor;
             ctx.fillText(b.label, b.x + b.w / 2, b.y + b.h / 2);
         }
         if (firstR) {
-            botones.push(mkBoton(b.id, b.x, b.y, b.w, b.h));
+            botones.push(mkBoton(b.id, b.x / dimensiones.escalaTablero, b.y / dimensiones.escalaTablero, b.w / dimensiones.escalaTablero, b.h / dimensiones.escalaTablero));
+        } else {
+            botones[b.id + 5] = mkBoton(b.id, b.x / dimensiones.escalaTablero, b.y / dimensiones.escalaTablero, b.w / dimensiones.escalaTablero, b.h / dimensiones.escalaTablero);
         }
         dibujo = false;
     });
@@ -323,14 +351,14 @@ function dibujarVotacion() {
         ctx.strokeRect(b.x, b.y, b.w, b.h);
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.font = 'bold 30px sans-serif';
+        ctx.font = fuente;
         ctx.fillStyle = b.labelcolor;
         if (b.id == 0) {
             ctx.fillText(b.label, b.x + b.w / 2, b.y + b.h / 4);
         } else {
             ctx.fillText(b.label, b.x + b.w / 2, b.y + b.h / 2);
             if (botonesP.length < 2) {
-                botonesP.push(mkBoton(b.id + 11, b.x, b.y, b.w, b.h));
+                botonesP.push(mkBoton(b.id + 11, b.x / dimensiones.escalaTablero, b.y / dimensiones.escalaTablero, b.w / dimensiones.escalaTablero, b.h / dimensiones.escalaTablero));
             }
         }
     });
@@ -341,7 +369,7 @@ function dibujarVictoria() {
     var c = document.getElementById("tablero");
     var ctx = c.getContext("2d");
     if (singlePlayer == "true") {
-        var font = 'bold 50px sans-serif';
+        var font = `bold ${50*dimensiones.escalaTablero}px sans-serif`;
         if (gameState.game_state.winner_pair == gameState.game_state.players.players[me].pair) {
             var txt = "Victoria";
         } else {
@@ -350,7 +378,7 @@ function dibujarVictoria() {
 
     } else {
         var txt = `Victoria del equipo ${gameState.game_state.winner_pair}`;
-        var font = 'bold 30px sans-serif';
+        var font = fuente;
     }
     var b = makeButton(0, 560, 300, 800, 300, txt, 'white', 'black', 'black');
     ctx.clearRect(b.x - 1, b.y - 1, b.w + 2, b.h + 2);
@@ -376,13 +404,24 @@ function dibujarVictoria() {
     ctx.fillText(puntos, b.x + b.w / 2, b.y + b.h * 3 / 4);
 }
 
+function dibujarIdSala() {
+    var c = document.getElementById("tablero");
+    var ctx = c.getContext("2d");
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    ctx.font = fuente;
+    ctx.fillStyle = 'white';
+    let texto = sessionStorage.getItem('idPartida');
+    ctx.fillText(texto, c.width - 20 * dimensiones.escalaTablero, 20 * dimensiones.escalaTablero);
+}
+
 function makeButton(id, x, y, w, h, label, fill, stroke, labelcolor) {
     return ({
         id: id,
-        x: x,
-        y: y,
-        w: w,
-        h: h,
+        x: x * dimensiones.escalaTablero,
+        y: y * dimensiones.escalaTablero,
+        w: w * dimensiones.escalaTablero,
+        h: h * dimensiones.escalaTablero,
         fill: fill,
         stroke: stroke,
         labelcolor: labelcolor,
@@ -393,10 +432,10 @@ function makeButton(id, x, y, w, h, label, fill, stroke, labelcolor) {
 function mkBoton(id, x, y, w, h) {
     return ({
         id: id,
-        x: x,
-        y: y,
-        w: w,
-        h: h,
+        x: x * dimensiones.escalaTablero,
+        y: y * dimensiones.escalaTablero,
+        w: w * dimensiones.escalaTablero,
+        h: h * dimensiones.escalaTablero,
     });
 }
 
