@@ -5,6 +5,7 @@ let username = sessionStorage.getItem('username');
 let id = sessionStorage.getItem('id');
 let idEquipo1 = 0;
 let idEquipo2 = 0;
+let userAux = "";
 
 document.querySelector(".idPartida").innerHTML = `Identificador de la sala: <b><em>${idPartida}</em></b>`;
 document.querySelector(".equipo1").innerHTML = "Unirse a equipo 1";
@@ -21,13 +22,22 @@ function obtenerParejas() {
             headers: {
                 Authorization: `Bearer ${token}`
             }
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.text();
-            } else {
-                alert("Se ha producido un fallo al recuperar la partida.");
-                throw "Respuesta incorrecta por parte del servidor";
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.text();
+        }
+        else {
+            alert("Se ha producido un fallo al recuperar la partida.");
+            throw "Respuesta incorrecta por parte del servidor";
+        }
+    })
+    .then(data => {
+        let json = JSON.parse(data);
+        let jugadorJoined = false;
+        if(json.game.pairs[1].users != null) {
+            if(json.game.pairs[1].users[0].username == username) {
+                jugadorJoined = true;
             }
             userAux = json.game.pairs[0].users[0].username;
             document.querySelector(".miembro1").innerHTML = `${userAux}`;
