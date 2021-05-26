@@ -13,7 +13,14 @@ function crearUsuario(e) {
         password: pass
     });
 
-    fetch("http://15.188.14.213:11050/api/v1/users/", {
+    if(username.indexOf(" ") != -1) {
+        alert("Error: el nombre de usuario no puede contener espacios en blanco.");
+        document.querySelector("#user").value = "";
+        document.querySelector("#pass").value = "";
+    }
+
+    else {
+        fetch("http://15.188.14.213:11050/api/v1/users/", {
             method: "POST",
             headers: {
                 //Accept: "application/json",
@@ -33,6 +40,7 @@ function crearUsuario(e) {
             }
         })
         .catch(err => console.log(err));
+    }
 }
 
 botonSubmit.addEventListener('click', crearUsuario);

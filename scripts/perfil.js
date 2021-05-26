@@ -49,7 +49,6 @@ fetch(`http://15.188.14.213:11050/api/v1/games/user/${id}`, {
     .then(data => {
         json = JSON.parse(data);
         let resultadoPartida = "";
-        let minutos, segundos;
         let iteraciones;
         if (json.games != null) {
             if(json.games.length <= 10) {
@@ -64,13 +63,10 @@ fetch(`http://15.188.14.213:11050/api/v1/games/user/${id}`, {
                 } else {
                     resultadoPartida = "Derrota";
                 }
-                const inicio = new Date(json.games[i].creation_date);
                 const final = new Date(json.games[i].end_date);
-                let elapsedTime = final - inicio;
-                minutos = elapsedTime / 60000;
-                segundos = elapsedTime % 60000;
+                let date = final.toDateString();
 
-                document.querySelector(".historialPartidas").innerHTML +=
+                document.querySelector("#historialCorto").innerHTML +=
                     `<tr>
                     <td>${minutos} minutos y ${segundos} segundos</td>
                     <td>${json.games[i].name}</td>
@@ -83,7 +79,13 @@ fetch(`http://15.188.14.213:11050/api/v1/games/user/${id}`, {
     .catch(err => console.log(err));
 
 function buscarUsuario() {
-    document.querySelector(".historialPartidas").innerHTML = "";
+    document.querySelector("#historialCorto").innerHTML = 
+        `<tr>
+            <th>Finalización</th>
+            <th>Nombre de la partida</th>
+            <th>Resultado</th>
+            <th>Puntuación</th>
+        </tr>`;
     let idHistorial = 0;
 
     let usuario = perfilBuscado.value;
@@ -129,7 +131,6 @@ function buscarUsuario() {
             .then(data => {
                 json = JSON.parse(data);
                 let resultadoPartida = "";
-                let minutos, segundos;
                 let iteraciones;
                 if (json.games != null) {
                     if(json.games.length <= 10) {
@@ -144,15 +145,12 @@ function buscarUsuario() {
                         } else {
                             resultadoPartida = "Derrota";
                         }
-                        const inicio = new Date(json.games[i].creation_date);
                         const final = new Date(json.games[i].end_date);
-                        let elapsedTime = final - inicio;
-                        minutos = elapsedTime / 60000;
-                        segundos = elapsedTime % 60000;
+                        let date = final.toDateString();
 
-                        document.querySelector(".historialPartidas").innerHTML +=
+                        document.querySelector("#historialCorto").innerHTML +=
                             `<tr>
-                            <td>${minutos} minutos y ${segundos} segundos</td>
+                            <td>${date}</td>
                             <td>${json.games[i].name}</td>
                             <td>${resultadoPartida}</td>
                             <td>${json.games[i].points}</td>

@@ -24,7 +24,9 @@ function login() {
             if (response.ok) {
                 return response.text();
             } else {
-                alert("Fallo al iniciar sesión.");
+                alert("Fallo al iniciar sesión: usuario o contraseña incorrectos.");
+                document.querySelector("#user").value = "";
+                document.querySelector("#pass").value = "";
                 throw "Respuesta incorrecta por parte del servidor";
             }
         })
