@@ -4,7 +4,7 @@ let playerId = parseInt(sessionStorage.getItem('playerId'), 10);
 let pairId = parseInt(sessionStorage.getItem('pairId'), 10);
 let creaPartida = sessionStorage.getItem('crearPartida');
 
-let ws = new WebSocket("ws:15.188.14.213:11050/simulation");
+let ws = new WebSocket("ws:192.168.1.141:9000/simulation");
 let singlePlayer = sessionStorage.getItem('singlePlayer');
 let cartas = [];
 let botones = [];
@@ -103,8 +103,10 @@ function dibujar(firstR) {
     var c = document.getElementById("tablero");
     var ctx = c.getContext("2d");
     c.height = window.innerHeight;
+    var help = document.getElementById("ayuda");
     var tablero = new Image();
     if (firstR) {
+        botones.push(mkBoton(14, 1760, 50, 80, 80));
         c.addEventListener('click', function(evt) { //Detección de eventos de click en el canvas
             var mousePos = getMousePos(c, evt);
             if (gameState.status == "votePause") { //Click en votación de pausa
@@ -137,6 +139,7 @@ function dibujar(firstR) {
     }
     tablero.addEventListener('load', function() { //Mostramos el tablero una vez haya cargado la imagen
         ctx.drawImage(tablero, 0, 0, 1920, 1080);
+        ctx.drawImage(help, 1820, 50, 80, 80);
         ctx.textAlign = 'right';
         ctx.textBaseline = 'middle';
         ctx.font = 'bold 30px sans-serif';
@@ -235,7 +238,7 @@ function dibujarPila() {
     pila.forEach(function(carta, idx) {
         carta.addEventListener('load', function() {
             ctx.save();
-            ctx.drawImage(carta, 1000 + (120 * idx), 150);
+            ctx.drawImage(carta, 1000 + (150 * idx), 150);
             ctx.restore();
         }, false);
     });
@@ -363,12 +366,14 @@ function dibujarVictoria() {
     ctx.fillStyle = b.labelcolor;
     ctx.fillText(b.label, b.x + b.w / 2, b.y + b.h / 4);
     var idx = 2;
-    for (i = 0; i < 4; i++) {
-        if (gameState.game_state.winner_pair == gameState.game_state.players.players[i].pair) {
-            ctx.fillText(gameState.game_state.players.players[i].username, b.x + b.w / 2, b.y + b.h * idx / 4);
-            idx++;
-        }
-    }
+    var puntos = (gameState.game_state.points_team_a + gameState.game_state.points_sing_a) + " - " + (gameState.game_state.points_team_b + gameState.game_state.points_sing_b)
+        /*for (i = 0; i < 4; i++) {
+            if (gameState.game_state.winner_pair == gameState.game_state.players.players[i].pair) {
+                ctx.fillText(gameState.game_state.players.players[i].username, b.x + b.w / 2, b.y + b.h * idx / 4);
+                idx++;
+            }
+        }*/
+    ctx.fillText(puntos, b.x + b.w / 2, b.y + b.h * 3 / 4);
 }
 
 function makeButton(id, x, y, w, h, label, fill, stroke, labelcolor) {
@@ -592,6 +597,9 @@ function botonPulsado(boton) {
                     "event_type": 7,
                 };
             }
+            break;
+        case 14:
+            window.open("https://www.ludoteka.com/clasika/guinote.html", '_blank');
             break;
     }
     if (msg != null) {
