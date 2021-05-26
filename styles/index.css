@@ -53,3 +53,12 @@ h1 {
     color: white;
     border: solid black;
 }
+
+.credenciales {
+    display: flex;
+    justify-content: center;
+}
+
+input[type=checkbox] {
+    transform: scale(2);
+}
