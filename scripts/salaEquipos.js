@@ -22,118 +22,118 @@ function obtenerParejas() {
             headers: {
                 Authorization: `Bearer ${token}`
             }
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.text();
-        }
-        else {
-            alert("Se ha producido un fallo al recuperar la partida.");
-            throw "Respuesta incorrecta por parte del servidor";
-        }
-    })
-    .then(data => {
-        let json = JSON.parse(data);
-        let jugadorJoined = false;
-        idEquipo1 = json.game.pairs[0].id;
-        idEquipo2 = json.game.pairs[1].id;
-        if(json.game.pairs[0].users != null) {
-            if(json.game.pairs[0].users[0].username == username) {
-                jugadorJoined = true;
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.text();
+            } else {
+                alert("Se ha producido un fallo al recuperar la partida.");
+                throw "Respuesta incorrecta por parte del servidor";
             }
-            userAux = json.game.pairs[0].users[0].username;
-            document.querySelector(".miembro1").innerHTML = `${userAux}`;
-            if(json.game.pairs[0].users[1] != null) {
-                if(json.game.pairs[0].users[1].username == username) {
+        })
+        .then(data => {
+            let json = JSON.parse(data);
+            let jugadorJoined = false;
+            idEquipo1 = json.game.pairs[0].id;
+            idEquipo2 = json.game.pairs[1].id;
+            if (json.game.pairs[0].users != null) {
+                if (json.game.pairs[0].users[0].username == username) {
                     jugadorJoined = true;
                 }
-                userAux = json.game.pairs[0].users[1].username;
-                document.querySelector(".miembro2").innerHTML = `${userAux}`;
+                userAux = json.game.pairs[0].users[0].username;
+                document.querySelector(".miembro1").innerHTML = `${userAux}`;
+                if (json.game.pairs[0].users[1] != null) {
+                    if (json.game.pairs[0].users[1].username == username) {
+                        jugadorJoined = true;
+                    }
+                    userAux = json.game.pairs[0].users[1].username;
+                    document.querySelector(".miembro2").innerHTML = `${userAux}`;
+                    document.querySelector(".equipo1").disabled = true;
+                    document.querySelector(".equipo1").innerHTML = "Equipo 1 completo";
+                }
+            }
+            if (json.game.pairs[1].users != null) {
+                if (json.game.pairs[1].users[0].username == username) {
+                    jugadorJoined = true;
+                }
+                userAux = json.game.pairs[1].users[0].username;
+                document.querySelector(".miembro3").innerHTML = `${userAux}`;
+                if (json.game.pairs[1].users[1] != null) {
+                    if (json.game.pairs[1].users[1].username == username) {
+                        jugadorJoined = true;
+                    }
+                    userAux = json.game.pairs[1].users[1].username;
+                    document.querySelector(".miembro4").innerHTML = `${userAux}`;
+                    document.querySelector(".equipo2").disabled = true;
+                    document.querySelector(".equipo2").innerHTML = "Equipo 2 completo";
+                }
+            }
+            if (jugadorJoined == true) {
                 document.querySelector(".equipo1").disabled = true;
-                document.querySelector(".equipo1").innerHTML = "Equipo 1 completo";
-            }
-        }
-        if(json.game.pairs[1].users != null) {
-            if(json.game.pairs[1].users[0].username == username) {
-                jugadorJoined = true;
-            }
-            userAux = json.game.pairs[1].users[0].username;
-            document.querySelector(".miembro3").innerHTML = `${userAux}`;
-            if(json.game.pairs[1].users[1] != null) {
-                if(json.game.pairs[1].users[1].username == username) {
-                    jugadorJoined = true;
-                }
-                userAux = json.game.pairs[1].users[1].username;
-                document.querySelector(".miembro4").innerHTML = `${userAux}`;
                 document.querySelector(".equipo2").disabled = true;
-                document.querySelector(".equipo2").innerHTML = "Equipo 2 completo";
             }
-        }
-        if(jugadorJoined == true) {
-            document.querySelector(".equipo1").disabled = true;
-            document.querySelector(".equipo2").disabled = true;
-        }
-    })
-    .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
 }
 
 function joinEquipo1() {
     // antes de unirse, comprobar que el equipo1 no este completo
     let equipoCompleto = false;
     fetch(`http://15.188.14.213:11050/api/v1/games/${idPartida}`, {
-        method: "GET",
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    })
-    .then(response => {
-        if(response.ok) {
-            return response.text();
-        }
-        else {
-            alert("Se ha producido un fallo al intentar unirse al Equipo 1.");
-            throw "Respuesta incorrecta por parte del servidor";
-        }
-    })
-    .then(data => {
-        let json = JSON.parse(data);
-        if(json.game.pairs[0].users != null) {
-            if(json.game.pairs[0].users[1] != null) {
-                // equipo completo
-                equipoCompleto = true;
-            }
-        }
-    })
-    .catch(err => console.log(err));
-
-    if(equipoCompleto == false) {
-        let idAux = parseInt(id, 10);
-        let jsonData = JSON.stringify({
-            user_id: idAux,
-            pair_id: idEquipo1
-        });
-        console.log(idEquipo1);
-        fetch("http://15.188.14.213:11050/api/v1/players/", {
-            method: "POST",
+            method: "GET",
             headers: {
-                "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`
-            },
-            body: jsonData
+            }
         })
         .then(response => {
-            if(response.ok) {
+            if (response.ok) {
                 return response.text();
-            }
-            else {
+            } else {
                 alert("Se ha producido un fallo al intentar unirse al Equipo 1.");
                 throw "Respuesta incorrecta por parte del servidor";
             }
         })
         .then(data => {
-            window.location.href = "tableroJuego.html";
+            let json = JSON.parse(data);
+            if (json.game.pairs[0].users != null) {
+                if (json.game.pairs[0].users[1] != null) {
+                    // equipo completo
+                    equipoCompleto = true;
+                }
+            }
         })
         .catch(err => console.log(err));
+
+    if (equipoCompleto == false) {
+        let idAux = parseInt(id, 10);
+        let jsonData = JSON.stringify({
+            user_id: idAux,
+            pair_id: idEquipo1
+        });
+        fetch("http://15.188.14.213:11050/api/v1/players/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: jsonData
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    alert("Se ha producido un fallo al intentar unirse al Equipo 1.");
+                    throw "Respuesta incorrecta por parte del servidor";
+                }
+            })
+            .then(data => {
+                let json = JSON.parse(data);
+                sessionStorage.setItem('playerId', json.player.id);
+                sessionStorage.setItem('pairId', json.player.pair_id);
+
+                window.location.href = "tableroJuego.html";
+            })
+            .catch(err => console.log(err));
     }
 }
 
@@ -141,58 +141,60 @@ function joinEquipo2() {
     // antes de unirse, comprobar que el equipo2 no este completo
     let equipoCompleto = false;
     fetch(`http://15.188.14.213:11050/api/v1/games/${idPartida}`, {
-        method: "GET",
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    })
-    .then(response => {
-        if(response.ok) {
-            return response.text();
-        }
-        else {
-            alert("Se ha producido un fallo al intentar unirse al Equipo 2.");
-            throw "Respuesta incorrecta por parte del servidor";
-        }
-    })
-    .then(data => {
-        let json = JSON.parse(data);
-        if(json.game.pairs[1].users != null) {
-            if(json.game.pairs[1].users[1] != null) {
-                // equipo completo
-                equipoCompleto = true;
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
             }
-        }
-    })
-    .catch(err => console.log(err));
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.text();
+            } else {
+                alert("Se ha producido un fallo al intentar unirse al Equipo 2.");
+                throw "Respuesta incorrecta por parte del servidor";
+            }
+        })
+        .then(data => {
+            let json = JSON.parse(data);
+            if (json.game.pairs[1].users != null) {
+                if (json.game.pairs[1].users[1] != null) {
+                    // equipo completo
+                    equipoCompleto = true;
+                }
+            }
+        })
+        .catch(err => console.log(err));
 
-    if(equipoCompleto == false) {
+    if (equipoCompleto == false) {
         let idAux = parseInt(id, 10);
         let jsonData = JSON.stringify({
             user_id: idAux,
             pair_id: idEquipo2
         });
         fetch("http://15.188.14.213:11050/api/v1/players/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            },
-            body: jsonData
-        })
-        .then(response => {
-            if(response.ok) {
-                return response.text();
-            }
-            else {
-                alert("Se ha producido un fallo al intentar unirse al Equipo 2.");
-                throw "Respuesta incorrecta por parte del servidor";
-            }
-        })
-        .then(data => {
-            window.location.href = "tableroJuego.html";
-        })
-        .catch(err => console.log(err));
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: jsonData
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    alert("Se ha producido un fallo al intentar unirse al Equipo 2.");
+                    throw "Respuesta incorrecta por parte del servidor";
+                }
+            })
+            .then(data => {
+                let json = JSON.parse(data);
+                sessionStorage.setItem('playerId', json.player.id);
+                sessionStorage.setItem('pairId', json.player.pair_id);
+
+                window.location.href = "tableroJuego.html";
+            })
+            .catch(err => console.log(err));
     }
 }
 
