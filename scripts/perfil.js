@@ -49,19 +49,33 @@ fetch(`http://15.188.14.213:11050/api/v1/games/user/${id}`, {
     .then(data => {
         json = JSON.parse(data);
         let resultadoPartida = "";
+        let minutos, segundos;
+        let iteraciones;
         if (json.games != null) {
-            for (let i = 0; i < json.games.length; i++) {
+            if(json.games.length <= 10) {
+                iteraciones = json.games.length;
+            }
+            else {
+                iteraciones = 10;
+            }
+            for (let i = 0; i < iteraciones; i++) {
                 if (json.games[i].winned == true) {
                     resultadoPartida = "Victoria";
                 } else {
                     resultadoPartida = "Derrota";
                 }
+                const inicio = new Date(json.games[i].creation_date);
+                const final = new Date(json.games[i].end_date);
+                let elapsedTime = final - inicio;
+                minutos = elapsedTime / 60000;
+                segundos = elapsedTime % 60000;
+
                 document.querySelector(".historialPartidas").innerHTML +=
                     `<tr>
-                    <td>x minutos</td>
+                    <td>${minutos} minutos y ${segundos} segundos</td>
                     <td>${json.games[i].name}</td>
                     <td>${resultadoPartida}</td>
-                    <td>Puntuación</td>
+                    <td>${json.games[i].points}</td>
                 </tr>`;
             }
         }
@@ -115,19 +129,33 @@ function buscarUsuario() {
             .then(data => {
                 json = JSON.parse(data);
                 let resultadoPartida = "";
+                let minutos, segundos;
+                let iteraciones;
                 if (json.games != null) {
-                    for (let i = 0; i < json.games.length; i++) {
+                    if(json.games.length <= 10) {
+                        iteraciones = json.games.length;
+                    }
+                    else {
+                        iteraciones = 10;
+                    }
+                    for (let i = 0; i < iteraciones; i++) {
                         if (json.games[i].winned == true) {
                             resultadoPartida = "Victoria";
                         } else {
                             resultadoPartida = "Derrota";
                         }
+                        const inicio = new Date(json.games[i].creation_date);
+                        const final = new Date(json.games[i].end_date);
+                        let elapsedTime = final - inicio;
+                        minutos = elapsedTime / 60000;
+                        segundos = elapsedTime % 60000;
+
                         document.querySelector(".historialPartidas").innerHTML +=
                             `<tr>
-                            <td>x minutos</td>
+                            <td>${minutos} minutos y ${segundos} segundos</td>
                             <td>${json.games[i].name}</td>
                             <td>${resultadoPartida}</td>
-                            <td>Puntuación</td>
+                            <td>${json.games[i].points}</td>
                         </tr>`;
                     }
                 }

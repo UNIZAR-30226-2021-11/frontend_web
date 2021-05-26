@@ -36,17 +36,20 @@ function obtenerParejas() {
         .then(data => {
             let json = JSON.parse(data);
             let jugadorJoined = false;
+            let miembro = 0;
             idEquipo1 = json.game.pairs[0].id;
             idEquipo2 = json.game.pairs[1].id;
             if (json.game.pairs[0].users != null) {
                 if (json.game.pairs[0].users[0].username == username) {
                     jugadorJoined = true;
+                    miembro = 1;
                 }
                 userAux = json.game.pairs[0].users[0].username;
                 document.querySelector(".miembro1").innerHTML = `${userAux}`;
                 if (json.game.pairs[0].users[1] != null) {
                     if (json.game.pairs[0].users[1].username == username) {
                         jugadorJoined = true;
+                        miembro = 2;
                     }
                     userAux = json.game.pairs[0].users[1].username;
                     document.querySelector(".miembro2").innerHTML = `${userAux}`;
@@ -57,12 +60,14 @@ function obtenerParejas() {
             if (json.game.pairs[1].users != null) {
                 if (json.game.pairs[1].users[0].username == username) {
                     jugadorJoined = true;
+                    miembro = 3;
                 }
                 userAux = json.game.pairs[1].users[0].username;
                 document.querySelector(".miembro3").innerHTML = `${userAux}`;
                 if (json.game.pairs[1].users[1] != null) {
                     if (json.game.pairs[1].users[1].username == username) {
                         jugadorJoined = true;
+                        miembro = 4;
                     }
                     userAux = json.game.pairs[1].users[1].username;
                     document.querySelector(".miembro4").innerHTML = `${userAux}`;
@@ -71,8 +76,29 @@ function obtenerParejas() {
                 }
             }
             if (jugadorJoined == true) {
-                document.querySelector(".equipo1").disabled = true;
-                document.querySelector(".equipo2").disabled = true;
+                switch (miembro) {
+                    case 1:
+                        sessionStorage.setItem('playerId', json.game.pairs[0].users[0].player_id);
+                        sessionStorage.setItem('pairId', json.game.pairs[0].id);
+                        break;
+                    case 2:
+                        sessionStorage.setItem('playerId', json.game.pairs[0].users[1].player_id);
+                        sessionStorage.setItem('pairId', json.game.pairs[0].id);
+                        break;
+                    case 3:
+                        sessionStorage.setItem('playerId', json.game.pairs[1].users[0].player_id);
+                        sessionStorage.setItem('pairId', json.game.pairs[1].id);
+                        break;
+                    case 4:
+                        sessionStorage.setItem('playerId', json.game.pairs[1].users[1].player_id);
+                        sessionStorage.setItem('pairId', json.game.pairs[1].id);
+                        break;
+                    default:
+                        sessionStorage.setItem('playerId', 0);
+                        sessionStorage.setItem('pairId', 0);
+                        break;
+                }
+                window.location.href = "tableroJuego.html";
             }
         })
         .catch(err => console.log(err));
