@@ -7,6 +7,8 @@ let idEquipo1 = 0;
 let idEquipo2 = 0;
 let userAux = "";
 
+sessionStorage.setItem('crearPartida', false);
+
 document.querySelector(".idPartida").innerHTML = `Identificador de la sala: <b><em>${idPartida}</em></b>`;
 document.querySelector(".equipo1").innerHTML = "Unirse a equipo 1";
 document.querySelector(".equipo2").innerHTML = "Unirse a equipo 2";

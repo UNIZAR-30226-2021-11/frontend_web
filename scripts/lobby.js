@@ -8,6 +8,7 @@ boton1.onclick = function() {
 };
 
 boton2.onclick = function() {
+    sessionStorage.setItem('singlePlayer', false);
     window.location.href = "onlineInicio.html";
 }
 boton3.onclick = function() {
