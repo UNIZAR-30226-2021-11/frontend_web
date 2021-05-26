@@ -109,54 +109,53 @@ function buscarUsuario() {
             document.querySelector(".username").innerHTML = `${json.user.username}`;
             document.querySelector(".victorias").innerHTML = `${json.user.games_won}`;
             document.querySelector(".derrotas").innerHTML = `${json.user.games_lost}`;
-        })
-        .catch(err => console.log(err));
 
-        let idHistorial = parseInt(sessionStorage.getItem('id_hist'));
-        fetch(`http://15.188.14.213:11050/api/v1/games/user/${idHistorial}`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.text();
-            } else {
-                alert("Fallo al recuperar el historial de partidas del usuario.");
-                throw "Respesta incorrecta por parte del servidor";
-            }
-        })
-        .then(data => {
-            json = JSON.parse(data);
-            let resultadoPartida = "";
-            let iteraciones;
-            if (json.games != null) {
-                if(json.games.length <= 10) {
-                    iteraciones = json.games.length;
+            fetch(`http://15.188.14.213:11050/api/v1/games/user/${json.user.id}`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`
                 }
-                else {
-                    iteraciones = 10;
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    alert("Fallo al recuperar el historial de partidas del usuario.");
+                    throw "Respesta incorrecta por parte del servidor";
                 }
-                for (let i = 0; i < iteraciones; i++) {
-                    if (json.games[i].winned == true) {
-                        resultadoPartida = "Victoria";
-                    } else {
-                        resultadoPartida = "Derrota";
+            })
+            .then(data => {
+                json = JSON.parse(data);
+                let resultadoPartida = "";
+                let iteraciones;
+                if (json.games != null) {
+                    if(json.games.length <= 10) {
+                        iteraciones = json.games.length;
                     }
-                    const final = new Date(json.games[i].end_date);
-                    let date = final.toDateString();
+                    else {
+                        iteraciones = 10;
+                    }
+                    for (let i = 0; i < iteraciones; i++) {
+                        if (json.games[i].winned == true) {
+                            resultadoPartida = "Victoria";
+                        } else {
+                            resultadoPartida = "Derrota";
+                        }
+                        const final = new Date(json.games[i].end_date);
+                        let date = final.toDateString();
 
-                    document.querySelector("#historialCorto").innerHTML +=
-                        `<tr>
-                            <td>${date}</td>
-                            <td>${json.games[i].name}</td>
-                            <td>${resultadoPartida}</td>
-                            <td>${json.games[i].points}</td>
-                        </tr>`;
+                        document.querySelector("#historialCorto").innerHTML +=
+                            `<tr>
+                                <td>${date}</td>
+                                <td>${json.games[i].name}</td>
+                                <td>${resultadoPartida}</td>
+                                <td>${json.games[i].points}</td>
+                            </tr>`;
+                    }
                 }
-            }
-        })
+            })
+            .catch(err => console.log(err));
+            })
         .catch(err => console.log(err));
     }
 }
