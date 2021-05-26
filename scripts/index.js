@@ -12,7 +12,6 @@ function login() {
         username: username,
         password: pass
     });
-    //15.188.14.213:11050
     fetch("http://15.188.14.213:11050/api/v1/users/login/", {
             method: "POST",
             headers: {
@@ -35,9 +34,32 @@ function login() {
             sessionStorage.setItem('token', json.token);
             sessionStorage.setItem('id', json.user.id);
             sessionStorage.setItem('username', json.user.username);
+            if(document.querySelector("#recordar").checked) {
+                // guardar credenciales
+                let hoy = new Date();
+                let expira = new Date();
+                // las cookies expiran dentro de un año
+                expira.setTime(hoy.getTime() + 3600000*24*30*12);
+                document.cookie = "name=" + username + ";path=/" + ";expires=" + expira.toUTCString();
+                document.cookie = "password=" + encodeURI(pass) + ";path=/" + ";expires=" + expira.toUTCString();
+            }
             window.location.href = "lobby.html";
         })
         .catch(err => console.log(err));
 }
 
 botonLogin.addEventListener('click', login);
+
+window.onload = function() {
+    const ck = `; ${document.cookie}`;
+
+    const nombre = ck.split("; name=");
+    if(nombre.length == 2) {
+        document.querySelector("#user").value = nombre.pop().split(';').shift();
+    }
+
+    const contra = ck.split("; password=");
+    if(contra.length == 2) {
+        document.querySelector("#pass").value = contra.pop().split(';').shift();
+    }
+}
