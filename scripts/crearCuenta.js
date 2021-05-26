@@ -14,27 +14,26 @@ function crearUsuario(e) {
     });
 
     //fetch("http://15.188.14.213:11050/api/v1/users/", {
-    fetch("http://15.188.14.213:11050/api/v1/users/", {
-        method: "POST",
-        headers: {
-            //Accept: "application/json",
-            "Content-Type": "application/json"
-        },
-        body: jsonData
-    })
-    .then(response => {
-        if(response.ok) {
-            alert("Usuario creado correctamente.");
-            localStorage.setItem(`${username}_reverso`, 1);
-            localStorage.setItem(`${username}_tablero`, 1);
-            window.location.href = "index.html";
-        }
-        else {
-            alert("Se ha producido un fallo. No se ha podido crear el usuario.");
-            throw "Respuesta incorrecta por parte del servidor.";
-        }
-    })
-    .catch(err => console.log(err));
+    fetch("http://192.168.1.141:9000/api/v1/users/", {
+            method: "POST",
+            headers: {
+                //Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            body: jsonData
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("Usuario creado correctamente.");
+                localStorage.setItem(`${username}_reverso`, 1);
+                localStorage.setItem(`${username}_tablero`, 1);
+                window.location.href = "index.html";
+            } else {
+                alert("Se ha producido un fallo. No se ha podido crear el usuario.");
+                throw "Respuesta incorrecta por parte del servidor.";
+            }
+        })
+        .catch(err => console.log(err));
 }
 
 botonSubmit.addEventListener('click', crearUsuario);

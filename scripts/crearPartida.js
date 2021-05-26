@@ -28,9 +28,10 @@ function crearPartida() {
         })
         .then(data => {
             let json = JSON.parse(data);
-            sessionStorage.setItem('idPartida', json.game.name);
-            sessionStorage.setItem('numPartida', json.game.id);
+            sessionStorage.setItem('nombrePartida', json.game.name);
+            sessionStorage.setItem('idPartida', json.game.id);
             sessionStorage.setItem('pairId', json.game.my_pair_id);
+            sessionStorage.setItem('playerId', json.game.my_player_id);
             sessionStorage.setItem('crearPartida', true);
             window.location.href = "tableroJuego.html";
         })

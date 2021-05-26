@@ -60,7 +60,7 @@ fetch(`http://15.188.14.213:11050/api/v1/games/user/${id_hist}`, {
                     <td>${resultadoPartida}</td>
                     <td>${json.games[i].points}</td>
                 </tr>`;
+            }
         }
-    }
-})
-.catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
