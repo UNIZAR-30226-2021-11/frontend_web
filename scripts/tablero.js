@@ -51,7 +51,20 @@ let me = 0;
 
 let gameState = null;
 
-
+window.addEventListener('beforeunload', function() { //Si cambiamos de ventana
+    if (ws.readyState == 1) { //avisamos al servidor en caso de no haber cerrado el ws
+        var msg = {
+            "game_id": gameId,
+            "player_id": playerId,
+            "event_type": 2,
+        };
+        ws.send(JSON.stringify(msg)); //Enviamos un mensaje de salida del jugador
+        ws.close();
+    }
+    if (ws.readyState == 0) {
+        ws.close();
+    }
+});
 
 //Muestra un texto de carga en pantalla
 function cargando() {
@@ -119,6 +132,7 @@ ws.onmessage = function(event) {
         };
         ws.send(JSON.stringify(msg));
         alert("Juego pausado, saliendo de la partida... ");
+        ws.close();
 
         window.location.href = "lobby.html";
     } else if (gameState.status == "normal") { //Juego normal
@@ -480,6 +494,7 @@ function botonPulsado(boton) {
             };
             ws.send(JSON.stringify(msg));
             alert("Partida terminada, saliendo... ");
+            ws.close();
 
             window.location.href = "lobby.html";
             break;
