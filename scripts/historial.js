@@ -30,13 +30,15 @@ fetch(`http://15.188.14.213:11050/api/v1/games/user/${id_hist}`, {
                 const final = new Date(json.games[i].end_date);
                 let date = final.toDateString();
 
-                document.querySelector("#historialCompleto").innerHTML +=
-                    `<tr>
-                    <td>${date}</td>
-                    <td>${json.games[i].name}</td>
-                    <td>${resultadoPartida}</td>
-                    <td>${json.games[i].points}</td>
-                </tr>`;
+                if (json.games[i].points > 0) {
+                    document.querySelector("#historialCompleto").innerHTML +=
+                        `<tr>
+                        <td>${date}</td>
+                        <td>${json.games[i].name}</td>
+                        <td>${resultadoPartida}</td>
+                        <td>${json.games[i].points}</td>
+                    </tr>`;
+                }
             }
         }
     })
