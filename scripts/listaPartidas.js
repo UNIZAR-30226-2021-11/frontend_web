@@ -45,27 +45,26 @@ atras.onclick = function() {
 
 document.querySelector(".botonBuscar").onclick = function() {
     let query = document.querySelector(".buscador").value;
-        
-    if(query != "") {
+
+    if (query != "") {
         fetch(`http://15.188.14.213:11050/api/v1/games/${query}`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-        .then(response => {
-            if(response.ok) {
-                return response.text();
-            }
-            else {
-                alert("No se ha podido encontrar la partida buscada.");
-                throw "Respesta incorrecta por parte del servidor";
-            }
-        })
-        .then(data => {
-            sessionStorage.setItem('idPartida', query);
-            window.location.href = "salaEquipos.html";
-        })
-        .catch(err => console.log(err));
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    alert("No se ha podido encontrar la partida buscada.");
+                    throw "Respesta incorrecta por parte del servidor";
+                }
+            })
+            .then(data => {
+                sessionStorage.setItem('idPartida', query);
+                window.location.href = "salaEquipos.html";
+            })
+            .catch(err => console.log(err));
     }
 }

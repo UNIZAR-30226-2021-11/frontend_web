@@ -28,103 +28,6 @@ fetch(`http://15.188.14.213:11050/api/v1/users/${username}`, {
         document.querySelector(".username").innerHTML = `${json.user.username}`;
 
         fetch(`http://15.188.14.213:11050/api/v1/games/user/${json.user.id}`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.text();
-            } else {
-                alert("Fallo al recuperar el historial de partidas del usuario.");
-                throw "Respuesta incorrecta por parte del servidor";
-            }
-        })
-        .then(data => {
-            json = JSON.parse(data);
-            let resultadoPartida = "";
-            let iteraciones;
-            let numeroDerrotas = 0;
-            let numeroVictorias = 0;
-            if (json.games != null) {
-                if(json.games.length <= 10) {
-                    iteraciones = json.games.length;
-                }
-                else {
-                    iteraciones = 10;
-                }
-                for (let i = 0; i < iteraciones; i++) {
-                    if (json.games[i].winned == true) {
-                        resultadoPartida = "Victoria";
-                    } else {
-                        resultadoPartida = "Derrota";
-                    }
-                    const final = new Date(json.games[i].end_date);
-                    let date = final.toDateString();
-
-                    if(json.games[i].points > 0) {
-                        document.querySelector("#historialCorto").innerHTML +=
-                            `<tr>
-                                <td>${date}</td>
-                                <td>${json.games[i].name}</td>
-                                <td>${resultadoPartida}</td>
-                                <td>${json.games[i].points}</td>
-                            </tr>`;
-                    }
-                }
-                for(let i=0; i<json.games.length; i++) {
-                    if(json.games[i].points > 100) {
-                        numeroVictorias++;
-                    }
-                    else if(json.games[i].points > 0) {
-                        numeroDerrotas++;
-                    }
-                }
-            }
-            document.querySelector(".victorias").innerHTML = numeroVictorias;
-            document.querySelector(".derrotas").innerHTML = numeroDerrotas;
-        })
-        .catch(err => console.log(err));
-    })
-    .catch(err => console.log(err));
-
-
-
-
-function buscarUsuario() {
-    document.querySelector("#historialCorto").innerHTML = 
-        `<tr>
-            <th>Finalización</th>
-            <th>Nombre de la partida</th>
-            <th>Resultado</th>
-            <th>Puntuación</th>
-        </tr>`;
-
-    let usuario = perfilBuscado.value;
-    if (usuario != "") {
-        fetch(`http://15.188.14.213:11050/api/v1/users/${usuario}`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.text();
-            } else {
-                alert("Usuario no encontrado.");
-                throw "Respesta incorrecta por parte del servidor";
-            }
-        })
-        .then(data => {
-            json = JSON.parse(data);
-            sessionStorage.setItem('id_hist', json.user.id);
-            document.querySelector(".username").innerHTML = `${json.user.username}`;
-            document.querySelector(".victorias").innerHTML = `${json.user.games_won}`;
-            document.querySelector(".derrotas").innerHTML = `${json.user.games_lost}`;
-
-            fetch(`http://15.188.14.213:11050/api/v1/games/user/${json.user.id}`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -135,7 +38,7 @@ function buscarUsuario() {
                     return response.text();
                 } else {
                     alert("Fallo al recuperar el historial de partidas del usuario.");
-                    throw "Respesta incorrecta por parte del servidor";
+                    throw "Respuesta incorrecta por parte del servidor";
                 }
             })
             .then(data => {
@@ -145,10 +48,9 @@ function buscarUsuario() {
                 let numeroDerrotas = 0;
                 let numeroVictorias = 0;
                 if (json.games != null) {
-                    if(json.games.length <= 10) {
+                    if (json.games.length <= 10) {
                         iteraciones = json.games.length;
-                    }
-                    else {
+                    } else {
                         iteraciones = 10;
                     }
                     for (let i = 0; i < iteraciones; i++) {
@@ -160,21 +62,20 @@ function buscarUsuario() {
                         const final = new Date(json.games[i].end_date);
                         let date = final.toDateString();
 
-                        if(json.games[i].points > 0) {
+                        if (json.games[i].points > 0) {
                             document.querySelector("#historialCorto").innerHTML +=
                                 `<tr>
-                                    <td>${date}</td>
-                                    <td>${json.games[i].name}</td>
-                                    <td>${resultadoPartida}</td>
-                                    <td>${json.games[i].points}</td>
-                                </tr>`;
+                                <td>${date}</td>
+                                <td>${json.games[i].name}</td>
+                                <td>${resultadoPartida}</td>
+                                <td>${json.games[i].points}</td>
+                            </tr>`;
                         }
                     }
-                    for(let i=0; i<json.games.length; i++) {
-                        if(json.games[i].points > 100) {
+                    for (let i = 0; i < json.games.length; i++) {
+                        if (json.games[i].points > 100) {
                             numeroVictorias++;
-                        }
-                        else if(json.games[i].points > 0) {
+                        } else if (json.games[i].points > 0) {
                             numeroDerrotas++;
                         }
                     }
@@ -183,8 +84,103 @@ function buscarUsuario() {
                 document.querySelector(".derrotas").innerHTML = numeroDerrotas;
             })
             .catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
+
+
+
+
+function buscarUsuario() {
+    document.querySelector("#historialCorto").innerHTML =
+        `<tr>
+            <th>Finalización</th>
+            <th>Nombre de la partida</th>
+            <th>Resultado</th>
+            <th>Puntuación</th>
+        </tr>`;
+
+    let usuario = perfilBuscado.value;
+    if (usuario != "") {
+        fetch(`http://15.188.14.213:11050/api/v1/users/${usuario}`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             })
-        .catch(err => console.log(err));
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    alert("Usuario no encontrado.");
+                    throw "Respesta incorrecta por parte del servidor";
+                }
+            })
+            .then(data => {
+                json = JSON.parse(data);
+                sessionStorage.setItem('id_hist', json.user.id);
+                document.querySelector(".username").innerHTML = `${json.user.username}`;
+                document.querySelector(".victorias").innerHTML = `${json.user.games_won}`;
+                document.querySelector(".derrotas").innerHTML = `${json.user.games_lost}`;
+
+                fetch(`http://15.188.14.213:11050/api/v1/games/user/${json.user.id}`, {
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.text();
+                        } else {
+                            alert("Fallo al recuperar el historial de partidas del usuario.");
+                            throw "Respesta incorrecta por parte del servidor";
+                        }
+                    })
+                    .then(data => {
+                        json = JSON.parse(data);
+                        let resultadoPartida = "";
+                        let iteraciones;
+                        let numeroDerrotas = 0;
+                        let numeroVictorias = 0;
+                        if (json.games != null) {
+                            if (json.games.length <= 10) {
+                                iteraciones = json.games.length;
+                            } else {
+                                iteraciones = 10;
+                            }
+                            for (let i = 0; i < iteraciones; i++) {
+                                if (json.games[i].winned == true) {
+                                    resultadoPartida = "Victoria";
+                                } else {
+                                    resultadoPartida = "Derrota";
+                                }
+                                const final = new Date(json.games[i].end_date);
+                                let date = final.toDateString();
+
+                                if (json.games[i].points > 0) {
+                                    document.querySelector("#historialCorto").innerHTML +=
+                                        `<tr>
+                                    <td>${date}</td>
+                                    <td>${json.games[i].name}</td>
+                                    <td>${resultadoPartida}</td>
+                                    <td>${json.games[i].points}</td>
+                                </tr>`;
+                                }
+                            }
+                            for (let i = 0; i < json.games.length; i++) {
+                                if (json.games[i].points > 100) {
+                                    numeroVictorias++;
+                                } else if (json.games[i].points > 0) {
+                                    numeroDerrotas++;
+                                }
+                            }
+                        }
+                        document.querySelector(".victorias").innerHTML = numeroVictorias;
+                        document.querySelector(".derrotas").innerHTML = numeroDerrotas;
+                    })
+                    .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err));
     }
 }
 
