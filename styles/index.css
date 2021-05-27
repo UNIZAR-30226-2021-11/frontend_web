@@ -7,17 +7,20 @@ body {
     background-image: url("../images/guinote_background_2.png");
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
 }
 
 h1 {
     font-size: 100px;
     text-align: center;
     margin: 100px auto 50px auto;
+    color: gold;
+    text-shadow: -3px 0 brown, 0 3px brown, 3px 0 brown, 0 -3px brown;
 }
 
 .logotipo {
-    width: 270px;
-    height: 200px;
+    width: 200px;
+    height: 170px;
     position: absolute;
     top: 0;
     right: 0;
@@ -37,6 +40,11 @@ h1 {
     margin: auto auto 30px auto;
 }
 
+.formulario input {
+    border: solid black;
+    border-width: 1px;
+}
+
 .botones {
     display: flex;
     align-items: center;
@@ -46,19 +54,27 @@ h1 {
 .acceder, .crearCuenta {
     height: 80px;
     width: 40%;
+    font-size: x-large;
+    background-image: radial-gradient(ellipse, rgba(52, 205, 21, 0.482), green);
 }
 
 .acceder:hover, .crearCuenta:hover {
-    background-color: green;
-    color: white;
-    border: solid black;
+    color: gold;
+    border: solid green;
+    cursor: pointer;
 }
 
 .credenciales {
     display: flex;
-    justify-content: center;
+}
+
+.credenciales label {
+    padding-left: 10%;
+    font-size: x-large;
 }
 
 input[type=checkbox] {
     transform: scale(2);
+    position: absolute;
+    left: 50%;
 }

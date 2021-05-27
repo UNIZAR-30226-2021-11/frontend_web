@@ -3,9 +3,30 @@ html {
     font-family: 'Kiwi Maru', serif;
 }
 
+body {
+    background-image: url("../images/guinote_background.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+a {
+    margin-left: 2%;
+}
+
 #pantalla {
     min-width: 100%;
     min-height: 100%;
+}
+
+.idPartida {
+    color: gold;
+    text-shadow: -2px 0 brown, 0 2px brown, 2px 0 brown, 0 -2px brown;
+}
+
+em {
+    color: gold;
+    text-shadow: none;
 }
 
 .equipo1, .equipo2 {
@@ -13,7 +34,6 @@ html {
     height: 80px;
     border: 2px solid #555555;
     border-radius: 8px;
-    color: white;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -21,7 +41,8 @@ html {
     font-size: 20px;
     margin: 20px 2px;
     cursor: pointer;
-    background-color: #e7e7e7;
+    font-size: x-large;
+    background-image: radial-gradient(ellipse, rgba(52, 205, 21, 0.482), green);
     color: black;
     margin-bottom: 30px;
 }
@@ -29,6 +50,11 @@ html {
 .equipo1:disabled, .equipo2:disabled {
     opacity: 50%;
     cursor: default;
+}
+
+.equipo1:hover, .equipo2:hover {
+    border: solid green;
+    color: gold;
 }
 
 .idPartida {

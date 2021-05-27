@@ -3,16 +3,37 @@ html {
     font-family: 'Kiwi Maru', serif;
 }
 
+body {
+    background-image: url("../images/guinote_background.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 #pantalla {
     min-width: 100%;
     min-height: 100%;
 }
 
+.logotipo {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 170px;
+}
+
+a {
+    margin-left: 2%;
+}
+
 h1 {
     text-align: center;
-    display: inline-block;
     width: 90%;
-    font-size: 36px;
+    font-size: 50px;
+    margin: 20px auto 10px auto;
+    color: gold;
+    text-shadow: -2px 0 brown, 0 2px brown, 2px 0 brown, 0 -2px brown;
 }
 
 #tablaHistorial {
@@ -34,13 +55,24 @@ h1 {
 #historialCompleto th {
     padding: 5px;
     border: 1px solid black;
+    color: gold;
+    text-shadow: -1px 0 brown, 0 1px brown, 1px 0 brown, 0 -1px brown;
+    opacity: 0.8;
+    background-color:darkgreen;
 }
 
 #historialCompleto td {
     padding: 15px;
     border-right: 1px solid black;
+    color: gold;
+    text-shadow: -1px 0 brown, 0 1px brown, 1px 0 brown, 0 -1px brown;
+    opacity: 0.8;
+    background-color:green;
 }
 
 #historialCompleto tr:hover {
-    background-color: #ddd;
+    background-color:darkgreen;
+    color: gold;
+    text-shadow: -1px 0 brown, 0 1px brown, 1px 0 brown, 0 -1px brown;
+    opacity: 1;
 }

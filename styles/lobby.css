@@ -5,14 +5,17 @@ html {
 
 body {
     background-image: url("../images/guinote_background.png");
-    background-position: center;
     background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 h1 {
     font-size: 200px;
     text-align: center;
     margin: 100px auto 200px auto;
+    color: gold;
+    text-shadow: -2px 0 brown, 0 2px brown, 2px 0 brown, 0 -2px brown;
 }
 
 .botonLogout {
@@ -36,8 +39,8 @@ h1 {
     position: absolute;
     top: 0;
     right: 0;
-    width: 270px;
-    height: 200px;
+    width: 200px;
+    height: 170px;
 }
 
 .botones {
@@ -51,10 +54,11 @@ h1 {
     font-size: x-large;
     margin: 10px;
     height: 100px;
+    background-image: radial-gradient(ellipse, rgba(52, 205, 21, 0.482), green);
 }
 
 .botones button:hover {
-    background-color: green;
-    color: white;
-    border: solid black;
+    color: gold;
+    border: solid green;
+    cursor: pointer;
 }

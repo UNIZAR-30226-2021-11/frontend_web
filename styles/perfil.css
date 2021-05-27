@@ -4,7 +4,7 @@ html {
 }
 
 body {
-    background-image: url("../images/green-background.png");
+    background-image: url("../images/guinote_background.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -25,8 +25,6 @@ button {
     width: 250px;
     height: 80px;
     border: 2px solid #555555;
-    border-radius: 8px;
-    color: white;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -34,8 +32,13 @@ button {
     font-size: 20px;
     margin: 4px 2px;
     cursor: pointer;
-    background-color: #e7e7e7;
     color: black;
+    background-image: radial-gradient(ellipse, rgba(52, 205, 21, 0.482), green);
+}
+
+button:hover {
+    color: gold;
+    border: solid green;
 }
 
 aside {
@@ -50,7 +53,7 @@ aside {
     min-height: 40%;
     font-size: 26px;
     color: gold;
-    text-shadow: -1px 0 green, 0 1px green, 1px 0 green, 0 -1px green;
+    text-shadow: -1px 0 brown, 0 1px brown, 1px 0 brown, 0 -1px brown;
 }
 
 #tablaHistorial {
@@ -73,15 +76,26 @@ aside {
 #historialCorto th {
     padding: 5px;
     border: 1px solid black;
+    color: gold;
+    text-shadow: -1px 0 brown, 0 1px brown, 1px 0 brown, 0 -1px brown;
+    opacity: 0.8;
+    background-color:darkgreen;
 }
 
 #historialCorto td {
     padding: 15px;
     border-right: 1px solid black;
+    color: gold;
+    text-shadow: -1px 0 brown, 0 1px brown, 1px 0 brown, 0 -1px brown;
+    opacity: 0.8;
+    background-color:green;
 }
 
 #historialCorto tr:hover {
-    background-color: #ddd;
+    background-color:darkgreen;
+    color: gold;
+    text-shadow: -1px 0 brown, 0 1px brown, 1px 0 brown, 0 -1px brown;
+    opacity: 1;
 }
 
 #userSearch {
@@ -93,9 +107,8 @@ aside {
 
 input[type=text] {
     width: 300px;
-    height: 50px;
+    height: 40px;
     border: 2px solid #555555;
-    border-radius: 8px;
     padding: 2px;
     text-align: left;
     text-decoration: none;
@@ -108,19 +121,21 @@ input[type=text] {
 
 input[type=button] {
     width: 120px;
-    height: 60px;
+    height: 40px;
     border: 2px solid #555555;
-    border-radius: 8px;
-    color: white;
-    padding: 15px 32px;
     text-align: center;
     text-decoration: none;
     margin: 4px 2px;
     cursor: pointer;
-    background-color: #e7e7e7;
     color: black;
     display: inline-block;
-    font-size: 20px;
+    font-size: large;
+    background-image: radial-gradient(ellipse, rgba(52, 205, 21, 0.482), green);
+}
+
+input[type=button]:hover {
+    color: gold;
+    border: solid green;
 }
 
 .engranaje {
@@ -139,7 +154,7 @@ input[type=button] {
     right: 0;
     top: 0;
     background-color: whitesmoke;
-    opacity: 90%;
+    opacity: 0.9;
 }
 
 .reversos {
@@ -181,11 +196,18 @@ input[type=button] {
 .botonBorrar {
     height: fit-content;
     font-size: small;
+    background-image: none;
+    background-color: crimson;
+    color: white;
+    border: solid black;
+    border-width: 1px;
 }
 
 .botonBorrar:hover {
-    background-color: red;
+    border: solid black;
+    border-width: 1px;
     color: white;
+    background-color: red;
 }
 
 .banner p {
